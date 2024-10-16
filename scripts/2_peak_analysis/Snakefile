@@ -1,0 +1,83 @@
+configfile: "snakemake_config.yaml"
+
+sample_list = list(config["sample"].keys())
+sample_config = dict()
+sample_config["umi_tag"] = dict()
+sample_config["barcode_tag"] = dict()
+
+for sample in sample_list:
+    sample_config["umi_tag"][sample] = config["sample"][sample]["umi_tag"]
+    sample_config["barcode_tag"][sample] = config["sample"][sample]["barcode_tag"]
+
+wildcard_constraints:
+    sample='|'.join(sample_list)
+
+def get_sample_umi_tag(wildcards):
+    return(sample_config["umi_tag"][wildcards.sample])
+
+def get_sample_barcode_tag(wildcards):
+    return(sample_config["barcode_tag"][wildcards.sample])
+
+rule all:
+    input:
+        expand("../../data/int_data/processed_bam/{sample}.dedup.bam", sample=sample_list),
+        expand("../../data/int_data/processed_bam/{sample}.dedup.bam.bai", sample=sample_list),
+        expand("../../data/raw_data/bam/{sample}.bam.bai", sample=sample_list),
+        expand("../../data/int_data/peaks/{sample}_peak.feather", sample=sample_list),
+
+rule index:
+    input:
+        "../../data/raw_data/bam/{sample}.bam"
+    output:
+        "../../data/raw_data/bam/{sample}.bam.bai"
+    shell:
+        "samtools index {input}"
+
+rule uniq:
+    input:
+        "../../data/raw_data/bam/{sample}.bam"
+    output:
+        "../../data/tmp/{sample}.uniq.bam"
+    threads: 16
+    shell:
+        "samtools view -@ {threads} -h -F 256 -bS -o {output} {input}"
+
+rule sort:
+    input:
+        "../../data/tmp/{sample}.uniq.bam"
+    output:
+        bam = "../../data/tmp/{sample}.uniq.sorted.bam",
+        bai = "../../data/tmp/{sample}.uniq.sorted.bam.bai"
+    threads: 16
+    shell:
+        "samtools sort -@ {threads} -o {output.bam} {input} && samtools index -@ {threads} {output.bam}"
+
+rule dedup:
+    input:
+        bam = "../../data/tmp/{sample}.uniq.sorted.bam",
+        bai = "../../data/tmp/{sample}.uniq.sorted.bam.bai"
+    output:
+        bam = "../../data/int_data/processed_bam/{sample}.dedup.bam",
+        bai = "../../data/int_data/processed_bam/{sample}.dedup.bam.bai"
+    params:
+        umi_tag=get_sample_umi_tag,
+        cell_tag=get_sample_barcode_tag
+    threads: 16
+    shell:
+        "umi_tools dedup -I {input.bam} -S {output.bam} --method=unique --extract-umi-method=tag --umi-tag={params.umi_tag} --cell-tag={params.cell_tag} && samtools index -@ {threads} {output.bam}"
+
+
+rule extract_peaks:
+    input:
+        bam="../../data/int_data/processed_bam/{sample}.dedup.bam",
+        pas="../../data/int_data/annotations/mouse_pas_500.bed"
+    params:
+        upstream=400,
+        downstream=20,
+    output:
+        "../../data/int_data/peaks/{sample}_peak.feather"
+    threads: 8
+    shell:
+        """
+        python extract_peaks.py -b {input.bam} -p {input.pas} -o {output} -j {threads} -u {params.upstream} -d {params.downstream}
+        """

@@ -1,0 +1,173 @@
+configfile: "snakemake_config.yaml"
+
+# genome fasta path for data simulation
+GENOME_PATH = "/root/nfsdata/REFERENCE/GENOME/MOUSE/vm25/GRCm38.p6.genome.fa"
+
+
+sample_list = list(config["sample"].keys())
+sample_config = dict()
+sample_config["umi_tag"] = dict()
+sample_config["barcode_tag"] = dict()
+
+for sample in sample_list:
+    sample_config["umi_tag"][sample] = config["sample"][sample]["umi_tag"]
+    sample_config["barcode_tag"][sample] = config["sample"][sample]["barcode_tag"]
+
+wildcard_constraints:
+    sample='|'.join(sample_list)
+
+pas_rep_list = [
+    f"{i}" for i in range(1, 4)
+]
+sample_rep_list = [
+    f"{i}" for i in range(1, 4)
+]
+
+gene_num_list = [5000]
+
+def get_sample_umi_tag(wildcards):
+    return(sample_config["umi_tag"][wildcards.sample])
+
+def get_sample_barcode_tag(wildcards):
+    return(sample_config["barcode_tag"][wildcards.sample])
+
+gn_pf_list = [1000, 2000, 4000, 8000, 16000]
+ps_pf_list = [250, 500, 1000, 2000, 4000]
+barcode_num_list = [1000, 2000, 4000, 8000, 16000]
+read_length_list = [40, 70, 100, 130, 160]
+
+
+pf_standard_values = {
+    'gn_pf': 4000,
+    'ps_pf': 1000,
+    'barcode_num': 4000,
+    'read_length': 100,
+}
+pf_variables = ['gn_pf', 'ps_pf', 'barcode_num', 'read_length']
+combinations = []
+for pr_pf in [1,2]:
+    for sample_rep in [1,2]:
+        for var, var_list in zip(pf_variables, [gn_pf_list, ps_pf_list, barcode_num_list, read_length_list]):
+            for value in var_list:
+                combination = pf_standard_values.copy()
+                combination[var] = value
+                combination["pr_pf"] = pr_pf
+                combination["sample_rep"] = sample_rep
+                combinations.append(combination)
+
+
+rule all:
+    input:
+        expand("../../data/sim_data/sim_pas/mm10_sim_pas_gn{gene_num}_rep{pas_rep}.bed", pas_rep=pas_rep_list, gene_num=gene_num_list),
+        expand("../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.bam", sample=sample_list, pas_rep=pas_rep_list, sample_rep=sample_rep_list, gene_num=gene_num_list),
+        expand("../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.bam.bai", sample=sample_list, pas_rep=pas_rep_list, sample_rep=sample_rep_list, gene_num=gene_num_list),
+        expand("../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.barcode_list.txt", sample=sample_list, pas_rep=pas_rep_list, sample_rep=sample_rep_list, gene_num=gene_num_list),
+        expand("../../data/sim_data/bam_for_cprsb/ps{peak_size}_gn{gn_pf}_rl{read_length}_bn{barcode_num}_pas{pr_pf}_rep{sample_rep}.bam",
+               zip,
+               gn_pf=[c['gn_pf'] for c in combinations],
+               peak_size=[c['ps_pf'] for c in combinations],
+               barcode_num=[c['barcode_num'] for c in combinations],
+               read_length=[c['read_length'] for c in combinations],
+               pr_pf=[c['pr_pf'] for c in combinations],
+               sample_rep=[c['sample_rep'] for c in combinations]
+        ),
+        expand("../../data/sim_data/bam_for_cprsb/ps{peak_size}_gn{gn_pf}_rl{read_length}_bn{barcode_num}_pas{pr_pf}_rep{sample_rep}.bam.bai",
+               zip,
+               gn_pf=[c['gn_pf'] for c in combinations],
+               peak_size=[c['ps_pf'] for c in combinations],
+               barcode_num=[c['barcode_num'] for c in combinations],
+               read_length=[c['read_length'] for c in combinations],
+               pr_pf=[c['pr_pf'] for c in combinations],
+               sample_rep=[c['sample_rep'] for c in combinations]
+        ),
+        expand("../../data/sim_data/bam_for_cprsb/ps{peak_size}_gn{gn_pf}_rl{read_length}_bn{barcode_num}_pas{pr_pf}_rep{sample_rep}.barcode_list.txt",
+               zip,
+               gn_pf=[c['gn_pf'] for c in combinations],
+               peak_size=[c['ps_pf'] for c in combinations],
+               barcode_num=[c['barcode_num'] for c in combinations],
+               read_length=[c['read_length'] for c in combinations],
+               pr_pf=[c['pr_pf'] for c in combinations],
+               sample_rep=[c['sample_rep'] for c in combinations]
+        ),
+
+rule generate_pas:
+    input:
+        "../../data/int_data/annotations/mouse_integrated_pas.bed"
+    output:
+        expand("../../data/sim_data/sim_pas/mm10_sim_pas_gn{gene_num}_rep{pas_rep}.bed", gene_num=gene_num_list, pas_rep=pas_rep_list)
+    shell:
+        """
+        python generate_sim_pas.py
+        """
+
+rule generate_pas_for_cprsb:
+    input:
+        "../../data/int_data/annotations/mouse_integrated_pas.bed"
+    output:
+        expand("../../data/sim_data/sim_pas_for_cprsb/mm10_sim_pas_gn{gene_num}_rep{pas_rep}.bed", gene_num=gn_pf_list, pas_rep=pas_rep_list)
+    shell:
+        """
+        python generate_sim_pas_for_cprsb.py
+        """
+
+rule generate_sim_peaks:
+    input:
+        "../../data/int_data/annotations/mouse_integrated_pas.bed"
+    output:
+        expand("../../data/sim_data/sim_peak/simulated_peak_ps{peak_size}_rl{read_length}.pickle", peak_size=ps_pf_list, read_length=read_length_list)
+    shell:
+        """
+        python generate_sim_peak_for_cprsb.py
+        """
+
+rule generate_bam:
+    input:
+        peaks="../../data/int_data/peaks/{sample}_peak.feather",
+        pas="../../data/sim_data/sim_pas/mm10_sim_pas_gn{gene_num}_rep{pas_rep}.bed",
+        genome_path=GENOME_PATH,
+    output:
+        bam = "../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.bam",
+        bai = "../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.bam.bai",
+        mtx = "../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.bam.expr.tsv",
+    shell:
+        """
+        python generate_sim_bam.py -g {input.genome_path} -p {input.peaks} -a {input.pas} -b {output.bam}
+        """
+
+
+
+rule extract_barcode:
+    input:
+        bam = "../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.bam"
+    output:
+        barcode_list = "../../data/sim_data/bam/{sample}_pas{pas_rep}_gn{gene_num}_rep{sample_rep}.barcode_list.txt"
+    shell:
+        """
+        samtools view {input.bam} | awk -F '\t' '{{for(i=12;i<=NF;i++) if($i ~ /^CB:Z:/) print substr($i,6)}}' | sort | uniq > {output.barcode_list}
+        """ 
+
+rule generate_bam_for_cprsb:
+    input:
+        peaks="../../data/sim_data/sim_peak/simulated_peak_ps{peak_size}_rl{read_length}.pickle",
+        pas="../../data/sim_data/sim_pas_for_cprsb/mm10_sim_pas_gn{gn_pf}_rep{pr_pf}.bed",
+        genome_path=GENOME_PATH,
+    output:
+        bam="../../data/sim_data/bam_for_cprsb/ps{peak_size}_gn{gn_pf}_rl{read_length}_bn{barcode_num}_pas{pr_pf}_rep{sample_rep}.bam",
+        bai="../../data/sim_data/bam_for_cprsb/ps{peak_size}_gn{gn_pf}_rl{read_length}_bn{barcode_num}_pas{pr_pf}_rep{sample_rep}.bam.bai"
+    shell:
+        """
+        python generate_sim_bam_for_cprsb.py -g {input.genome_path} -p {input.peaks} -a {input.pas} -b {output.bam} --barcode_num {wildcards.barcode_num}
+        """
+
+rule extract_barcode_for_cprsb:
+    input:
+        bam="../../data/sim_data/bam_for_cprsb/ps{peak_size}_gn{gn_pf}_rl{read_length}_bn{barcode_num}_pas{pr_pf}_rep{sample_rep}.bam",
+    output:
+        barcode_list="../../data/sim_data/bam_for_cprsb/ps{peak_size}_gn{gn_pf}_rl{read_length}_bn{barcode_num}_pas{pr_pf}_rep{sample_rep}.barcode_list.txt"
+    shell:
+        """
+            samtools view {input.bam} | awk -F '\t' '{{for(i=12;i<=NF;i++) if($i ~ /^CB:Z:/) print substr($i,6)}}' | sort | uniq > {output.barcode_list}
+        """
+
+
+

@@ -1,0 +1,113 @@
+sample:
+  Chromium_mouse_olfactorybulb_GSM3449591:
+    bam_path: ./data/bam/Chromium_mouse_olfactorybulb_GSM3449591.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_olfactorybulb_GSM3449592:
+    bam_path: ./data/bam/Chromium_mouse_olfactorybulb_GSM3449592.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_testicle_GSM5595992:
+    bam_path: ./data/bam/Chromium_mouse_testicle_GSM5595992.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_testicle_GSM5595993:
+    bam_path: ./data/bam/Chromium_mouse_testicle_GSM5595993.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Dropseq_mouse_heart_SRR7515702:
+    bam_path: ./data/bam/Dropseq_mouse_heart_SRR7515702.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_heart_SRR7515703:
+    bam_path: ./data/bam/Dropseq_mouse_heart_SRR7515703.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601887:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601887.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601888:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601888.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_brain_GSM4647178:
+    bam_path: ./data/bam/Microwell_mouse_brain_GSM4647178.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_brain_GSM6731158:
+    bam_path: ./data/bam/Microwell_mouse_brain_GSM6731158.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_testicle_GSM4647336:
+    bam_path: ./data/bam/Microwell_mouse_testicle_GSM4647336.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_testicle_GSM4647337:
+    bam_path: ./data/bam/Microwell_mouse_testicle_GSM4647337.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173955:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173955.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173956:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173956.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12805494:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12805494.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12808111:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12808111.bam
+    barcode_tag: XC
+    umi_tag: XM
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_spine_L7CN78D2:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_spine_L7CN78D2.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_spine_L8CN22C1:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_spine_L8CN22C1.bam
+    barcode_tag: B0
+    umi_tag: B3
+  Stereoseq_mouse_embryo_MouseE145E1S2:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_MouseE145E1S2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_MouseE145E1S3:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_MouseE145E1S3.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1:
+    bam_path: ./data/bam/Stereoseq_mouse_olfactorybulb_MouseolfaS1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2:
+    bam_path: ./data/bam/Stereoseq_mouse_olfactorybulb_MouseolfaS2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_brain_V19L01-041-C1:
+    bam_path: ./data/bam/Visium_mouse_brain_V19L01-041-C1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_brain_V19L29-035-D1:
+    bam_path: ./data/bam/Visium_mouse_brain_V19L29-035-D1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_kidney_V19L29-096-B1:
+    bam_path: ./data/bam/Visium_mouse_kidney_V19L29-096-B1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_olfactorybulb_V10N30-322-A1:
+    bam_path: ./data/bam/Visium_mouse_olfactorybulb_V10N30-322-A1.bam
+    barcode_tag: CB
+    umi_tag: UB

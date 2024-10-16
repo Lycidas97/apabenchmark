@@ -1,0 +1,262 @@
+configfile: "snakemake_config.yaml"
+# gtf file path
+GTF_PATH = "/root/nfsdata/REFERENCE/GENOME/MOUSE/vm25/gencode.vM25.annotation.gtf"
+GENOME_PATH = "/root/nfsdata/REFERENCE/GENOME/MOUSE/vm25/GRCm38.p6.genome.fa"
+GENOME_SIZE_PATH = "/root/nfsdata/REFERENCE/GENOME/MOUSE/vm25/GRCm38.p6.genome.fa.size"
+
+
+sample_list = list(config["sample"].keys())
+sample_config = dict()
+sample_config["umi_tag"] = dict()
+sample_config["barcode_tag"] = dict()
+
+for sample in sample_list:
+    sample_config["umi_tag"][sample] = config["sample"][sample]["umi_tag"]
+    sample_config["barcode_tag"][sample] = config["sample"][sample]["barcode_tag"]
+
+wildcard_constraints:
+    sample='|'.join(sample_list)
+
+cs_type_list = [
+    "match_utr",
+    "match_nonutr",
+    "unmatch_utr",
+    "unmatch_nonutr"
+]
+cs_read_num_list = [
+    "single",
+    "multi"
+]
+
+
+rule all:
+    input:
+        expand("../../data/int_data/cs/{sample}_cs.bed", sample=sample_list),
+        expand("../../data/int_data/filtered_cs/{sample}_{cs_read_num}_{cs_type}.bed", sample=sample_list, cs_type=cs_type_list, cs_read_num=cs_read_num_list),
+        expand("../../data/int_data/cs_ext_seq/{sample}_{cs_read_num}_{cs_type}_extended.fa", sample=sample_list, cs_type=cs_type_list, cs_read_num=cs_read_num_list),
+        expand("../../data/int_data/cs_cov/{sample}_{cs_read_num}_{cs_type}.cov", sample=sample_list, cs_type=cs_type_list, cs_read_num=cs_read_num_list),
+        expand("../../data/int_data/cs_motif/{sample}_{cs_read_num}_{cs_type}_motif_density.pkl", sample=sample_list, cs_type=cs_type_list, cs_read_num=cs_read_num_list),
+        expand("../../data/int_data/cs_motif/{sample}_{cs_read_num}_{cs_type}_motif_category.pkl", sample=sample_list, cs_type=cs_type_list, cs_read_num=cs_read_num_list),
+        expand("../../data/int_data/cs_peaks/{sample}_{cs_read_num}_peak.feather", sample=sample_list, cs_read_num=cs_read_num_list),
+
+rule extract_cs:
+    input:
+        bam="../../data/int_data/processed_bam/{sample}.dedup.bam",
+        gtf=GTF_PATH
+    params:
+        prefix="../../data/int_data/cs/{sample}"
+    output:
+        "../../data/int_data/cs/{sample}_cs.bed",
+    threads: 8
+    shell:
+        """
+        python extract_cs.py -b {input.bam} -g {input.gtf} -p {params.prefix} -j {threads}
+        """
+
+rule split_by_cs_read_num:
+    input:
+        cs = "../../data/int_data/cs/{sample}_cs.bed"
+    output:
+        single_cs = "../../data/int_data/cs/{sample}_single_cs.bed",
+        multi_cs = "../../data/int_data/cs/{sample}_multi_cs.bed"
+    shell:
+        """
+            awk '{{if (int($5) > 1) {{print $0}} }}' {input.cs} > {output.multi_cs} &&
+            awk '{{if (int($5) == 1) {{print $0}} }}' {input.cs} > {output.single_cs}
+        """
+
+rule remove_cs_pa:
+    input:
+        cs = "../../data/int_data/cs/{sample}_{cs_read_num}_cs.bed",
+        genome_size = GENOME_SIZE_PATH,
+        genome_fasta = GENOME_PATH
+    output:
+        "../../data/int_data/cs/{sample}_{cs_read_num}_cs_rm_pa.bed"
+    params:
+        downstream_extend = 20,
+        upstream_extend = 20,
+        max_mismatch = 1,
+        match_motif = "AAAAAAAAAA"
+    shell:
+        """
+        grep -E "chr[0-9XY]" {input.cs} | bedtools slop -i - -g {input.genome_size} -s -l {params.upstream_extend} -r {params.downstream_extend} |\
+        bedtools getfasta -fi {input.genome_fasta} -s -bed - | \
+        seqkit grep -p {params.match_motif} -m {params.max_mismatch} -P -s -v|\
+        grep ">" |  sed 's/[:()]/ /g' |\
+        awk 'BEGIN{{FS=" ";OFS="\t"}}{{split($2,a,"-"); ; if ($3 == "+"){{start=int(a[1])+{params.upstream_extend};end=int(a[2])-{params.downstream_extend}}} else {{start=int(a[1])+{params.downstream_extend};end=int(a[2])-{params.upstream_extend}}}; print substr($1,2),start,end,".",".",$3}}' | \
+        bedtools sort -i -  > {output}
+        """
+        
+rule remove_cs_pt:
+    input:
+        cs = "../../data/int_data/cs/{sample}_{cs_read_num}_cs_rm_pa.bed",
+        genome_size = GENOME_SIZE_PATH,
+        genome_fasta = GENOME_PATH
+    output:
+        "../../data/int_data/cs/{sample}_{cs_read_num}_cs_rm_pa_pt.bed"
+    params:
+        downstream_extend = 20,
+        upstream_extend = 20,
+        max_mismatch = 1,
+        match_motif = "TTTTTTTTTT"
+    shell:
+        """
+        grep -E "chr[0-9XY]" {input.cs} | bedtools slop -i - -g {input.genome_size} -s -l {params.upstream_extend} -r {params.downstream_extend} |\
+        bedtools getfasta -fi {input.genome_fasta} -s -bed - | \
+        seqkit grep -p {params.match_motif} -m {params.max_mismatch} -P -s -v|\
+        grep ">" |  sed 's/[:()]/ /g' |\
+        awk 'BEGIN{{FS=" ";OFS="\t"}}{{split($2,a,"-"); ; if ($3 == "+"){{start=int(a[1])+{params.upstream_extend};end=int(a[2])-{params.downstream_extend}}} else {{start=int(a[1])+{params.downstream_extend};end=int(a[2])-{params.upstream_extend}}}; print substr($1,2),start,end,".",".",$3}}' | \
+        bedtools sort -i -  > {output}
+        """
+
+
+rule extract_cs_peaks:
+    input:
+        bam="../../data/int_data/processed_bam/{sample}.dedup.bam",
+        pas="../../data/int_data/cs/{sample}_{cs_read_num}_cs_rm_pa_pt.bed"
+    params:
+        upstream=400,
+        downstream=20,
+    output:
+        "../../data/int_data/cs_peaks/{sample}_{cs_read_num}_peak.feather"
+    threads: 8
+    shell:
+        """
+        python extract_peaks.py -b {input.bam} -p {input.pas} -o {output} -j {threads} -u {params.upstream} -d {params.downstream}
+        """
+
+rule filter_cs:
+    input:
+        peaks="../../data/int_data/cs_peaks/{sample}_{cs_read_num}_peak.feather",
+        annotation="../../data/int_data/annotations/mouse_integrated_pas.bed",
+        gtf=GTF_PATH,
+    params:
+        prefix="{sample}_{cs_read_num}",
+        output_dir="../../data/int_data/filtered_cs/",
+    threads: 2
+    output:
+        "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_cs.bed",
+        "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_match_utr.bed",
+        "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_match_nonutr.bed",
+        "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_unmatch_utr.bed",
+        "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_unmatch_nonutr.bed"
+    shell:
+        """
+        python filter_cs.py -i {input.peaks} -p {params.prefix} -o {params.output_dir} -a {input.annotation}
+        """
+
+
+rule extract_seq:
+    input:
+        pas = "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_{cs_type}.bed",
+        fasta = GENOME_PATH,
+        genome_size = GENOME_SIZE_PATH
+    output:
+        fasta = "../../data/int_data/cs_ext_seq/{sample}_{cs_read_num}_{cs_type}_extended.fa"
+    params:
+        window = 500
+    threads: 4
+    shell:
+        """
+        grep -E "chr[0-9XY]" {input.pas} | bedtools slop -i - -g {input.genome_size} -b {params.window} | \
+        bedtools getfasta -fi {input.fasta} -s -bed - -fo {output.fasta}
+        """
+
+rule extract_motif:
+    input:
+        fasta = "../../data/int_data/cs_ext_seq/{sample}_{cs_read_num}_{cs_type}_extended.fa"
+    params:
+        output_dir = "../../data/int_data/cs_motif/"
+    output:
+        "../../data/int_data/cs_motif/{sample}_{cs_read_num}_{cs_type}_motif_density.pkl",
+        "../../data/int_data/cs_motif/{sample}_{cs_read_num}_{cs_type}_motif_category.pkl"
+    shell:
+        """
+        python ./scripts/extract_cs_motif.py -i {input.fasta} -o {params.output_dir}
+        """
+
+rule coverage:
+    input:
+        bam = "../../data/int_data/processed_bam/{sample}.dedup.bam",
+        pas = "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_{cs_type}.bed"
+    output:
+        forward_bg = "../../data/int_data/cs_cov/{sample}_{cs_read_num}_{cs_type}.forward.bg",
+        reverse_bg = "../../data/int_data/cs_cov/{sample}_{cs_read_num}_{cs_type}.reverse.bg"
+    params:
+        genome_size = GENOME_SIZE_PATH,
+        slop = 1000
+    threads: 4
+    shell:
+        """
+        bedtools slop -i {input.pas} -g {params.genome_size} -b {params.slop} | samtools view -@ {threads} -L - -b {input.bam} | bedtools genomecov -ibam - -strand + -bga -split > {output.forward_bg} &&
+        bedtools slop -i {input.pas} -g {params.genome_size} -b {params.slop} | samtools view -@ {threads} -L - -b {input.bam} | bedtools genomecov -ibam - -strand - -bga -split > {output.reverse_bg}
+        """
+
+rule extract_coverage:
+    input:
+        forward_bg = "../../data/int_data/cs_cov/{sample}_{cs_read_num}_{cs_type}.forward.bg",
+        reverse_bg = "../../data/int_data/cs_cov/{sample}_{cs_read_num}_{cs_type}.reverse.bg",
+        pas = "../../data/int_data/filtered_cs/{sample}_{cs_read_num}_{cs_type}.bed"
+    output:
+        cov = "../../data/int_data/cs_cov/{sample}_{cs_read_num}_{cs_type}.cov"
+    params: 
+        upstream = 500,
+        downstream = 200
+    run:
+        import pandas as pd
+        import numpy as np
+        forward_df = pd.read_csv(input.forward_bg, sep="\t", header=None)
+        reverse_df = pd.read_csv(input.reverse_bg, sep="\t", header=None)
+
+        columns = ['chr', 'start', 'end', 'coverage']
+        forward_df.columns = columns
+        reverse_df.columns = columns
+
+        forward_df_dict = {}
+        reverse_df_dict = {}
+        for chr in forward_df['chr'].unique():
+            forward_df_dict[chr] = forward_df[forward_df['chr'] == chr].reset_index(drop=True)
+        for chr in reverse_df['chr'].unique():
+            reverse_df_dict[chr] = reverse_df[reverse_df['chr'] == chr].reset_index(drop=True)
+
+        pas_df = pd.read_csv(input.pas, sep="\t", header=None)
+        pas_df[1] = pas_df.apply(lambda x: x[2] - 1 if x[5]=="+" else x[1], axis=1)
+        pas_df[2] = pas_df.apply(lambda x: x[1] + 1 if x[5]=="-" else x[2], axis=1)
+
+
+        upstream = params.upstream
+        downstream = params.downstream
+        cumulative_coverage = np.zeros(downstream+upstream+1)
+        for _, pas in pas_df.iterrows():
+            pas_chr = pas[0]
+            pas_strand = pas[5]
+            if pas_strand == "+":
+                pas_start = pas[1] - upstream
+                pas_end = pas[2] + downstream
+            else:
+                pas_start = pas[1] - downstream
+                pas_end = pas[2] + upstream
+            
+            bg_df = forward_df_dict[pas_chr] if pas_strand == "+" else reverse_df_dict[pas_chr]
+            condition = (bg_df["start"] >= pas_start) & (bg_df["end"] <= pas_end)
+            region_indices = np.where(condition)[0]  # 获取满足条件的行的位置索引
+
+            if len(region_indices) > 0:
+                start_index = region_indices[0]
+                end_index = region_indices[-1]
+                if start_index != 0:
+                    start_index -= 1
+                if end_index < len(bg_df) - 1:
+                    end_index += 1
+                region = bg_df.iloc[start_index:end_index + 1, :].copy()
+                region.iloc[0, 1] = pas_start
+                region.iloc[-1, 2] = pas_end
+                region["length"] = region["end"] - region["start"]
+                coverage_array = np.concatenate([np.full(length, coverage) for length, coverage in zip(region["length"], region['coverage'])])
+                if pas_strand == "-":
+                    coverage_array = coverage_array[::-1]
+                coverage_array = coverage_array / coverage_array.sum()
+                cumulative_coverage += coverage_array
+
+        np.savetxt(output.cov, cumulative_coverage)
+
