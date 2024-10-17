@@ -35,6 +35,4 @@ For questions or feedback, please contact:
 ## License
 
 This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
-```
 
-This README file provides an overview of your project, its contents, usage instructions, citation information, contact details, and license information. You can further customize and expand the README based on your specific project requirements and add any additional sections or information that you think would be helpful for users of your code and datasets.
