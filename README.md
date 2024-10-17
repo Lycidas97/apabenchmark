@@ -8,10 +8,8 @@ Alternative polyadenylation (APA) is a widespread post-transcriptional regulator
 
 ## Contents
 
-- `data/`: Contains the datasets used in the study, including simulated and real data from various sequencing protocols.
+- `data/`: Contains raw data, intermediata data and result data of the study.
 - `scripts/`: Contains the scripts used for data processing, analysis, and evaluation of APA detection tools. Each section within the `scripts/` directory has its own README file with detailed instructions.
-- `results/`: Contains the output files and figures generated during the analysis.
-- `docs/`: Contains additional documentation and supplementary materials.
 
 ## Usage
 
