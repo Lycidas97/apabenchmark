@@ -1,6 +1,6 @@
 # APA Benchmark
 
-This repository contains the code and datasets used in the study "Benchmarking alternative polyadenylation detection in single-cell and spatial transcriptomes".
+This repository contains the code used in the study "Benchmarking alternative polyadenylation detection in single-cell and spatial transcriptomes".
 
 ## Overview
 
