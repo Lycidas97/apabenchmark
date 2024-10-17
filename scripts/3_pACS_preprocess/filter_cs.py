@@ -12,7 +12,7 @@ parser.add_argument("-p", "--prefix", dest="prefix", help="prefix", type=str)
 parser.add_argument("-a", "--annotation", dest="annotation", help="annotation", type=str)
 
 
-utr_bed = BedTool("../../data/int_data/annotations/mm10.3utr.sorted.bed")
+utr_bed = BedTool("../../data/raw_data/annotations/mm10.3utr.sorted.bed")
 
 
 MIN_READS_PER_PEAK = 20
