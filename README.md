@@ -9,7 +9,7 @@ Alternative polyadenylation (APA) is a widespread post-transcriptional regulator
 ## Contents
 
 - `data/`: Contains the datasets used in the study, including simulated and real data from various sequencing protocols.
-- `scripts/`: Contains the scripts used for data processing, analysis, and evaluation of APA detection tools.
+- `scripts/`: Contains the scripts used for data processing, analysis, and evaluation of APA detection tools. Each section within the `scripts/` directory has its own README file with detailed instructions.
 - `results/`: Contains the output files and figures generated during the analysis.
 - `docs/`: Contains additional documentation and supplementary materials.
 
@@ -22,10 +22,17 @@ Alternative polyadenylation (APA) is a widespread post-transcriptional regulator
 
 2. Install the required dependencies as specified in the documentation.
 
-3. Run the scripts in the `scripts/` directory to reproduce the analysis and generate the results.
+3. Navigate to the `scripts/` directory:
+   ```
+   cd apabenchmark/scripts/
+   ```
 
-4. Refer to the documentation in the `docs/` directory for detailed information on the datasets, methods, and usage of the scripts.
+4. Follow the instructions provided in the README file of each section within the `scripts/` directory to run the corresponding scripts. Each section focuses on a specific aspect of the analysis, such as data preprocessing, APA detection, or evaluation.
 
+5. Run the scripts in the order specified by the README files to reproduce the analysis and generate the results.
+
+6. The generated output files and figures will be saved in the `data/int_data/` directory.
+7. 
 ## Contact
 
 For questions or feedback, please contact:
