@@ -1,0 +1,709 @@
+raw_sample:
+  Chromium_mouse_olfactorybulb_GSM3449591:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592:
+    read_length: 66
+  Chromium_mouse_testicle_GSM5595992:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993:
+    read_length: 98
+  Dropseq_mouse_heart_SRR7515702:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703:
+    read_length: 54
+  Dropseq_mouse_testicle_SRR8601887:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888:
+    read_length: 112
+  Microwell_mouse_brain_GSM4647178:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337:
+    read_length: 150
+  Slideseq_mouse_olfactorybulb_GSM5173955:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956:
+    read_length: 160
+  Slideseq_mouse_testicle_SRR12805493:
+    read_length: 60
+  Slideseq_mouse_testicle_SRR12805494:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12808111:
+    read_length: 50
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB:
+    read_length: 121
+  SpatialTranscriptomics_mouse_spine_L7CN78D2:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1:
+    read_length: 55
+  Stereoseq_mouse_embryo_MouseE145E1S2:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2:
+    read_length: 100
+  VisiumHD_mouse_brain_H1-8CPZTMY-A1:
+    read_length: 50
+  VisiumHD_mouse_embryo_H1-CQWQN2G-D1:
+    read_length: 50
+  VisiumHD_mouse_intestine_H1-F9HB7PZ-D1:
+    read_length: 50
+  VisiumHD_mouse_kidney_H1-TFG3KDZ-D1:
+    read_length: 50
+  Visium_mouse_brain_V19L01-041-C1:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1:
+    read_length: 120
+  Visium_mouse_olfactorybulb_V10N30-322-A1:
+    read_length: 90
+sim_sample:
+  Chromium_mouse_olfactorybulb_GSM3449591_pas1_gn5000_rep1:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas1_gn5000_rep2:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas1_gn5000_rep3:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas2_gn5000_rep1:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas2_gn5000_rep2:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas2_gn5000_rep3:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas3_gn5000_rep1:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas3_gn5000_rep2:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449591_pas3_gn5000_rep3:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas1_gn5000_rep1:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas1_gn5000_rep2:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas1_gn5000_rep3:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas2_gn5000_rep1:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas2_gn5000_rep2:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas2_gn5000_rep3:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas3_gn5000_rep1:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas3_gn5000_rep2:
+    read_length: 66
+  Chromium_mouse_olfactorybulb_GSM3449592_pas3_gn5000_rep3:
+    read_length: 66
+  Chromium_mouse_testicle_GSM5595992_pas1_gn5000_rep1:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas1_gn5000_rep2:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas1_gn5000_rep3:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas2_gn5000_rep1:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas2_gn5000_rep2:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas2_gn5000_rep3:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas3_gn5000_rep1:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas3_gn5000_rep2:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595992_pas3_gn5000_rep3:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas1_gn5000_rep1:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas1_gn5000_rep2:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas1_gn5000_rep3:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas2_gn5000_rep1:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas2_gn5000_rep2:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas2_gn5000_rep3:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas3_gn5000_rep1:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas3_gn5000_rep2:
+    read_length: 98
+  Chromium_mouse_testicle_GSM5595993_pas3_gn5000_rep3:
+    read_length: 98
+  Dropseq_mouse_heart_SRR7515702_pas1_gn5000_rep1:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas1_gn5000_rep2:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas1_gn5000_rep3:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas2_gn5000_rep1:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas2_gn5000_rep2:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas2_gn5000_rep3:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas3_gn5000_rep1:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas3_gn5000_rep2:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515702_pas3_gn5000_rep3:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas1_gn5000_rep1:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas1_gn5000_rep2:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas1_gn5000_rep3:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas2_gn5000_rep1:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas2_gn5000_rep2:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas2_gn5000_rep3:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas3_gn5000_rep1:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas3_gn5000_rep2:
+    read_length: 54
+  Dropseq_mouse_heart_SRR7515703_pas3_gn5000_rep3:
+    read_length: 54
+  Dropseq_mouse_testicle_SRR8601887_pas1_gn5000_rep1:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas1_gn5000_rep2:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas1_gn5000_rep3:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas2_gn5000_rep1:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas2_gn5000_rep2:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas2_gn5000_rep3:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas3_gn5000_rep1:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas3_gn5000_rep2:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601887_pas3_gn5000_rep3:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas1_gn5000_rep1:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas1_gn5000_rep2:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas1_gn5000_rep3:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas2_gn5000_rep1:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas2_gn5000_rep2:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas2_gn5000_rep3:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas3_gn5000_rep1:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas3_gn5000_rep2:
+    read_length: 112
+  Dropseq_mouse_testicle_SRR8601888_pas3_gn5000_rep3:
+    read_length: 112
+  Microwell_mouse_brain_GSM4647178_pas1_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas1_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas1_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas2_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas2_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas2_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas3_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas3_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_brain_GSM4647178_pas3_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas1_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas1_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas1_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas2_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas2_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas2_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas3_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas3_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_brain_GSM6731158_pas3_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas1_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas1_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas1_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas2_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas2_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas2_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas3_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas3_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647336_pas3_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas1_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas1_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas1_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas2_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas2_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas2_gn5000_rep3:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas3_gn5000_rep1:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas3_gn5000_rep2:
+    read_length: 150
+  Microwell_mouse_testicle_GSM4647337_pas3_gn5000_rep3:
+    read_length: 150
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas1_gn5000_rep1:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas1_gn5000_rep2:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas1_gn5000_rep3:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas2_gn5000_rep1:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas2_gn5000_rep2:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas2_gn5000_rep3:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas3_gn5000_rep1:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas3_gn5000_rep2:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173955_pas3_gn5000_rep3:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas1_gn5000_rep1:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas1_gn5000_rep2:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas1_gn5000_rep3:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas2_gn5000_rep1:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas2_gn5000_rep2:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas2_gn5000_rep3:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas3_gn5000_rep1:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas3_gn5000_rep2:
+    read_length: 160
+  Slideseq_mouse_olfactorybulb_GSM5173956_pas3_gn5000_rep3:
+    read_length: 160
+  Slideseq_mouse_testicle_SRR12805494_pas1_gn5000_rep1:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas1_gn5000_rep2:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas1_gn5000_rep3:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas2_gn5000_rep1:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas2_gn5000_rep2:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas2_gn5000_rep3:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas3_gn5000_rep1:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas3_gn5000_rep2:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12805494_pas3_gn5000_rep3:
+    read_length: 56
+  Slideseq_mouse_testicle_SRR12808111_pas1_gn5000_rep1:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas1_gn5000_rep2:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas1_gn5000_rep3:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas2_gn5000_rep1:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas2_gn5000_rep2:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas2_gn5000_rep3:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas3_gn5000_rep1:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas3_gn5000_rep2:
+    read_length: 50
+  Slideseq_mouse_testicle_SRR12808111_pas3_gn5000_rep3:
+    read_length: 50
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas1_gn5000_rep1:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas1_gn5000_rep2:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas1_gn5000_rep3:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas2_gn5000_rep1:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas2_gn5000_rep2:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas2_gn5000_rep3:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas3_gn5000_rep1:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas3_gn5000_rep2:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB_pas3_gn5000_rep3:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas1_gn5000_rep1:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas1_gn5000_rep2:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas1_gn5000_rep3:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas2_gn5000_rep1:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas2_gn5000_rep2:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas2_gn5000_rep3:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas3_gn5000_rep1:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas3_gn5000_rep2:
+    read_length: 121
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB_pas3_gn5000_rep3:
+    read_length: 121
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas1_gn5000_rep1:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas1_gn5000_rep2:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas1_gn5000_rep3:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas2_gn5000_rep1:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas2_gn5000_rep2:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas2_gn5000_rep3:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas3_gn5000_rep1:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas3_gn5000_rep2:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L7CN78D2_pas3_gn5000_rep3:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas1_gn5000_rep1:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas1_gn5000_rep2:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas1_gn5000_rep3:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas2_gn5000_rep1:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas2_gn5000_rep2:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas2_gn5000_rep3:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas3_gn5000_rep1:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas3_gn5000_rep2:
+    read_length: 55
+  SpatialTranscriptomics_mouse_spine_L8CN22C1_pas3_gn5000_rep3:
+    read_length: 55
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas1_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas1_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas1_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas2_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas2_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas2_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas3_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas3_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S2_pas3_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas1_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas1_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas1_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas2_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas2_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas2_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas3_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas3_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_embryo_MouseE145E1S3_pas3_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas1_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas1_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas1_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas2_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas2_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas2_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas3_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas3_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1_pas3_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas1_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas1_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas1_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas2_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas2_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas2_gn5000_rep3:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas3_gn5000_rep1:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas3_gn5000_rep2:
+    read_length: 100
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2_pas3_gn5000_rep3:
+    read_length: 100
+  Visium_mouse_brain_V19L01-041-C1_pas1_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas1_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas1_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas2_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas2_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas2_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas3_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas3_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_brain_V19L01-041-C1_pas3_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas1_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas1_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas1_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas2_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas2_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas2_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas3_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas3_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_brain_V19L29-035-D1_pas3_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas1_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas1_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas1_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas2_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas2_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas2_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas3_gn5000_rep1:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas3_gn5000_rep2:
+    read_length: 120
+  Visium_mouse_kidney_V19L29-096-B1_pas3_gn5000_rep3:
+    read_length: 120
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas1_gn5000_rep1:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas1_gn5000_rep2:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas1_gn5000_rep3:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas2_gn5000_rep1:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas2_gn5000_rep2:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas2_gn5000_rep3:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas3_gn5000_rep1:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas3_gn5000_rep2:
+    read_length: 90
+  Visium_mouse_olfactorybulb_V10N30-322-A1_pas3_gn5000_rep3:
+    read_length: 90
+pf_sample:
+  ps1000_gn1000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps1000_gn1000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps1000_gn1000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps1000_gn1000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps1000_gn16000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps1000_gn16000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps1000_gn16000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps1000_gn16000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps1000_gn2000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps1000_gn2000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps1000_gn2000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps1000_gn2000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn1000_pas1_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn1000_pas1_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn1000_pas2_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn1000_pas2_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn16000_pas1_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn16000_pas1_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn16000_pas2_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn16000_pas2_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn2000_pas1_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn2000_pas1_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn2000_pas2_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn2000_pas2_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn8000_pas1_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn8000_pas1_rep2:
+    read_length: 100
+  ps1000_gn4000_rl100_bn8000_pas2_rep1:
+    read_length: 100
+  ps1000_gn4000_rl100_bn8000_pas2_rep2:
+    read_length: 100
+  ps1000_gn4000_rl130_bn4000_pas1_rep1:
+    read_length: 130
+  ps1000_gn4000_rl130_bn4000_pas1_rep2:
+    read_length: 130
+  ps1000_gn4000_rl130_bn4000_pas2_rep1:
+    read_length: 130
+  ps1000_gn4000_rl130_bn4000_pas2_rep2:
+    read_length: 130
+  ps1000_gn4000_rl160_bn4000_pas1_rep1:
+    read_length: 160
+  ps1000_gn4000_rl160_bn4000_pas1_rep2:
+    read_length: 160
+  ps1000_gn4000_rl160_bn4000_pas2_rep1:
+    read_length: 160
+  ps1000_gn4000_rl160_bn4000_pas2_rep2:
+    read_length: 160
+  ps1000_gn4000_rl40_bn4000_pas1_rep1:
+    read_length: 40
+  ps1000_gn4000_rl40_bn4000_pas1_rep2:
+    read_length: 40
+  ps1000_gn4000_rl40_bn4000_pas2_rep1:
+    read_length: 40
+  ps1000_gn4000_rl40_bn4000_pas2_rep2:
+    read_length: 40
+  ps1000_gn4000_rl70_bn4000_pas1_rep1:
+    read_length: 70
+  ps1000_gn4000_rl70_bn4000_pas1_rep2:
+    read_length: 70
+  ps1000_gn4000_rl70_bn4000_pas2_rep1:
+    read_length: 70
+  ps1000_gn4000_rl70_bn4000_pas2_rep2:
+    read_length: 70
+  ps1000_gn8000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps1000_gn8000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps1000_gn8000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps1000_gn8000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps2000_gn4000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps2000_gn4000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps2000_gn4000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps2000_gn4000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps250_gn4000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps250_gn4000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps250_gn4000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps250_gn4000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps4000_gn4000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps4000_gn4000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps4000_gn4000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps4000_gn4000_rl100_bn4000_pas2_rep2:
+    read_length: 100
+  ps500_gn4000_rl100_bn4000_pas1_rep1:
+    read_length: 100
+  ps500_gn4000_rl100_bn4000_pas1_rep2:
+    read_length: 100
+  ps500_gn4000_rl100_bn4000_pas2_rep1:
+    read_length: 100
+  ps500_gn4000_rl100_bn4000_pas2_rep2:
+    read_length: 100

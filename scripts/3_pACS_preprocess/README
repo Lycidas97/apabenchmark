@@ -1,0 +1,42 @@
+Analyzing PACS
+==============
+
+This section describes the workflow for analyzing PACS (Poly(A) Cleavage Sites) using Snakemake.
+
+Prerequisites
+-------------
+
+- Make sure you have Snakemake installed. If not, you can install it using:
+
+  conda install -c bioconda -c conda-forge snakemake
+
+- Make sure you have the necessary dependencies installed. Snakemake will automatically create and manage the required environments based on the defined rules.
+
+Steps
+-----
+
+1. Set the `CORE_NUM` variable to the number of CPU cores you want to use:
+
+   CORE_NUM=64
+
+   Replace `64` with the actual number of CPU cores available on your system.
+
+2. Run the Snakemake workflow using the following command:
+
+   nohup snakemake --cores $CORE_NUM --use-conda &> benchmark.log &
+
+   This command will:
+   - Run Snakemake in the background using `nohup`.
+   - Use the specified number of CPU cores (`$CORE_NUM`).
+   - Create and use conda environments for each rule (`--use-conda`).
+   - Redirect the standard output and standard error to `benchmark.log`.
+
+3. Monitor the progress of the workflow by checking the `benchmark.log` file:
+
+   tail -f benchmark.log
+
+   This command will display the last few lines of the log file and update in real-time.
+
+4. Once the workflow finishes, the PACS analysis results will be generated and saved in the designated output directory.
+
+Note: Make sure you are in the directory where the Snakemake workflow is located before running the commands.

@@ -1,0 +1,47 @@
+Generating PAS and A-SNR Annotations
+====================================
+
+This section describes how to generate the necessary PAS (Polyadenylation Site) and A-SNR (Alternative Splicing-Noise Ratio) annotations for analysis.
+
+Prerequisites
+-------------
+
+- Make sure you have Jupyter Notebook installed.
+
+- Make sure you have the required dependencies installed. The necessary environment is defined in `scripts/envs/apasim.yml`.
+
+Steps
+-----
+
+
+1. Activate the `apasim` environment:
+
+   conda activate apasim
+
+   If you haven't created the environment yet, you can create it using:
+
+   conda env create -f scripts/envs/apasim.yml
+
+2. Install `ipykernel` in the `apasim` environment:
+
+   conda install ipykernel
+
+3. Register the `apasim` environment with Jupyter Notebook:
+
+   python -m ipykernel install --user --name apasim
+
+4. Launch Jupyter Notebook:
+
+   jupyter notebook
+
+5. In the Jupyter Notebook interface, open the `mouse_pas_integration.ipynb` script and run all cells to generate PAS annotations.
+
+6. Open the `filter_pas.ipynb` script and run all cells to filter the PAS annotations.
+
+7. Open the `get_asnr.ipynb` script and run all cells to generate A-SNR annotations.
+
+8. When finished, close the Jupyter Notebook interface and deactivate the `apasim` environment:
+
+   conda deactivate
+
+The generated annotation files will be saved in the designated output directory and can be used for subsequent analysis.

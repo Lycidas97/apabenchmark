@@ -1,0 +1,543 @@
+configfile: "snakemake_profile/sample.yaml"
+# shell("conda config --add envs_dirs /root/conda/envs")
+# import glob
+import os 
+CURRENT_PATH=os.getcwd()
+
+sim_bam_list = config["sim_sample"].keys()
+sim_bam_list = [x.split("/")[-1].replace(".bai", "") for x in sim_bam_list]
+sim_sample_list = [x.replace(".bam", "") for x in sim_bam_list]
+
+raw_bam_list = config["raw_sample"].keys()
+raw_bam_list = [x.split("/")[-1].replace(".bai", "") for x in raw_bam_list]
+raw_sample_list = [x.replace(".bam", "") for x in raw_bam_list]
+
+pf_bam_list = config["pf_sample"].keys()
+pf_bam_list = [x.split("/")[-1].replace(".bai", "") for x in pf_bam_list]
+pf_sample_list = [x.replace(".bam", "") for x in pf_bam_list]
+
+tool_list = ["sierra", "scapatrap", "scape", "scapa", "infernape", "scapture"]
+
+def get_pf_read_length(wildcards):
+    return config["pf_sample"][wildcards.pf_sample]["read_length"]
+
+def get_sim_read_length(wildcards):
+    return config["sim_sample"][wildcards.sim_sample]["read_length"]
+
+def get_raw_read_length(wildcards):
+    return config["raw_sample"][wildcards.raw_sample]["read_length"]
+
+def get_gt_bed(wildcards):
+    gene_number = wildcards.sim_sample.split("_")[-2]
+    pas_rep = wildcards.sim_sample.split("_")[-3].replace("pas","")
+    return f"../../data/sim_data/sim_pas/mm10_sim_pas_{gene_number}_rep{pas_rep}.bed"
+
+def get_gt_mtx(wildcards):
+    bam = wildcards.sim_sample.split("/")[-1]
+    return f"../../data/sim_data/bam/{bam}.bam.expr.tsv"
+
+
+wildcard_constraints:
+    sim_sample = "|".join(sim_sample_list),
+    # raw_sample = "|".join(raw_sample_list),
+    pf_sample = "|".join(pf_sample_list)
+
+rule all:
+    input: 
+        expand("../../data/result/benchmark_result/sim_bam_result/sierra/{sim_sample}/pas.bed", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/sierra/{sim_sample}/pas_counts.tsv", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scapatrap/{sim_sample}/pas.bed", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scapatrap/{sim_sample}/pas_counts.tsv", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scape/{sim_sample}/pas.bed", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scape/{sim_sample}/pas_counts.tsv", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scapa/{sim_sample}/pas.bed", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scapa/{sim_sample}/pas_counts.tsv", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/infernape/{sim_sample}/pas.bed", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/infernape/{sim_sample}/pas_counts.tsv", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scapture/{sim_sample}/pas.bed", sim_sample=sim_sample_list),
+        expand("../../data/result/benchmark_result/sim_bam_result/scapture/{sim_sample}/pas_counts.tsv", sim_sample=sim_sample_list),
+
+        expand("../../data/result/benchmark_result/pf_bam_result/sierra/{pf_sample}/pas.bed", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/sierra/{pf_sample}/pas_counts.tsv", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scapatrap/{pf_sample}/pas.bed", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scapatrap/{pf_sample}/pas_counts.tsv", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scape/{pf_sample}/pas.bed", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scape/{pf_sample}/pas_counts.tsv", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scapa/{pf_sample}/pas.bed", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scapa/{pf_sample}/pas_counts.tsv", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/infernape/{pf_sample}/pas.bed", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/infernape/{pf_sample}/pas_counts.tsv", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scapture/{pf_sample}/pas.bed", pf_sample=pf_sample_list),
+        expand("../../data/result/benchmark_result/pf_bam_result/scapture/{pf_sample}/pas_counts.tsv", pf_sample=pf_sample_list),
+
+        expand("../../data/result/benchmark_result/raw_bam_result/sierra/{raw_sample}/pas.bed", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/sierra/{raw_sample}/pas_counts.tsv", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scapatrap/{raw_sample}/pas.bed", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scapatrap/{raw_sample}/pas_counts.tsv", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scape/{raw_sample}/pas.bed", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scape/{raw_sample}/pas_counts.tsv", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scapa/{raw_sample}/pas.bed", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scapa/{raw_sample}/pas_counts.tsv", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/infernape/{raw_sample}/pas.bed", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/infernape/{raw_sample}/pas_counts.tsv", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scapture/{raw_sample}/pas.bed", raw_sample=raw_sample_list),
+        expand("../../data/result/benchmark_result/raw_bam_result/scapture/{raw_sample}/pas_counts.tsv", raw_sample=raw_sample_list),
+
+        expand("../../data/result/tool_performance/{tool}/{sim_sample}_match_performance.tsv", sim_sample=sim_sample_list, tool=tool_list),
+        expand("../../data/result/tool_performance/{tool}/{sim_sample}_pas_quantify_performance.tsv", sim_sample=sim_sample_list, tool=tool_list),
+        expand("../../data/result/tool_performance/{tool}/{sim_sample}_de_apa_performance.tsv", sim_sample=sim_sample_list, tool=tool_list),
+        expand("../../data/result/tool_performance/{tool}/{sim_sample}_match_pas.csv", sim_sample=sim_sample_list, tool=tool_list),
+        expand("../../data/result/tool_performance/{tool}/{sim_sample}_match_te.csv", sim_sample=sim_sample_list, tool=tool_list),
+        expand("../../data/result/tool_performance/{tool}/{sim_sample}_te_gap.tsv", sim_sample=sim_sample_list, tool=tool_list),
+
+
+rule sim_bam_scAPAtrap:
+    input: 
+        bam = "../../data/sim_data/bam/{sim_sample}.bam",
+    params:
+        read_length=get_sim_read_length,
+        working_dir="../../data/result/benchmark_result/sim_bam_result/scapatrap/{sim_sample}",
+        current_path=CURRENT_PATH,
+    output: 
+        "../../data/result/benchmark_result/sim_bam_result/scapatrap/{sim_sample}/pas.bed",
+        "../../data/result/benchmark_result/sim_bam_result/scapatrap/{sim_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapatrap.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scapatrap/bin/activate && \
+        Rscript /run_scAPAtrap.R -b {params.current_path}{input.bam} -w {params.current_path}{params.working_dir} -r {params.read_length} -t {threads} -c CB -u UB > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+
+rule sim_bam_sierra:
+    input: 
+        bam = "../../data/sim_data/bam/{sim_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam/{sim_sample}.barcode_list.txt"
+    params:
+        reference="./annotation/gencode.vM25.annotation.gtf",
+        working_dir="../../data/result/benchmark_result/sim_bam_result/sierra/{sim_sample}",
+        current_path=CURRENT_PATH,
+    output: 
+        "../../data/result/benchmark_result/sim_bam_result/sierra/{sim_sample}/pas.bed",
+        "../../data/result/benchmark_result/sim_bam_result/sierra/{sim_sample}/pas_counts.tsv"
+    singularity:
+        "sif/sierra.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /sierra/bin/activate && \
+        Rscript /run_sierra.R -b {params.current_path}{input.bam} -w {params.current_path}{params.working_dir} -c {params.current_path}{input.cellbarcode} -r {params.current_path}{params.reference} -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule sim_bam_infernape:
+    input:
+        bam = "../../data/sim_data/bam/{sim_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam/{sim_sample}.barcode_list.txt"
+    params:
+        working_dir="../../data/result/benchmark_result/sim_bam_result/infernape/{sim_sample}",
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/sim_bam_result/infernape/{sim_sample}/pas.bed",
+        "../../data/result/benchmark_result/sim_bam_result/infernape/{sim_sample}/pas_counts.tsv"
+    singularity:
+        "sif/infernape.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /infernape/bin/activate && \
+        Rscript /run_infernape.R -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -w {params.current_path}{params.working_dir} -g mm10 -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule sim_bam_maaper:
+    input:
+        bam = "../../data/sim_data/bam/{sim_sample}.bam",
+    params:
+        working_dir="../../data/result/benchmark_result/sim_bam_result/maaper/{sim_sample}",
+        read_length=get_sim_read_length,
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/sim_bam_result/maaper/{sim_sample}/pas.bed",
+    singularity:
+        "sif/maaper.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /mapper/bin/activate && \
+        Rscript /run_maaper.R -b {params.current_path}{input.bam} -w {params.current_path}{params.working_dir} -r {params.read_length} -g mm10 -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule sim_bam_scapa:
+    input:
+        bam = "../../data/sim_data/bam/{sim_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam/{sim_sample}.barcode_list.txt"
+    params:
+        working_dir="../../data/result/benchmark_result/sim_bam_result/scapa/{sim_sample}",
+        read_length=get_sim_read_length,
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/sim_bam_result/scapa/{sim_sample}/pas.bed",
+        "../../data/result/benchmark_result/sim_bam_result/scapa/{sim_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapa.sif"
+    threads: 8
+    shell: 
+        """
+        exec /bin/bash -c 'source /scapa/bin/activate && \
+        Rscript /run_scapa.R -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -w {params.current_path}{params.working_dir} -g "Mm10" -t {threads} -l {params.read_length} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule sim_bam_scapture:
+    input:
+        bam = "../../data/sim_data/bam/{sim_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam/{sim_sample}.barcode_list.txt"
+    params:
+        reference="./annotation/gencode.vM25.annotation.gtf",
+        working_dir="../../data/result/benchmark_result/sim_bam_result/scapture/{sim_sample}",
+        current_path=CURRENT_PATH,
+        read_length=get_sim_read_length,
+    output:
+        "../../data/result/benchmark_result/sim_bam_result/scapture/{sim_sample}/pas.bed",
+        "../../data/result/benchmark_result/sim_bam_result/scapture/{sim_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapture.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scapture/bin/activate && \
+        /run_scapture.sh -b {params.current_path}{input.bam} -o {params.current_path}{params.working_dir} -g mm10 -l {params.read_length} -t {threads} -c {params.current_path}{input.cellbarcode}> {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule sim_bam_scape:
+    input:
+        bam = "../../data/sim_data/bam/{sim_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam/{sim_sample}.barcode_list.txt"
+    params:
+        reference="./annotation/gencode.vM25.scape_utr.bed",
+        working_dir="../../data/result/benchmark_result/sim_bam_result/scape/{sim_sample}",
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/sim_bam_result/scape/{sim_sample}/pas.bed",
+        "../../data/result/benchmark_result/sim_bam_result/scape/{sim_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scape.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scape/bin/activate && \
+        /run_scape.sh -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -r {params.current_path}{params.reference} -o {params.current_path}{params.working_dir} -t {threads} -g CB,UB > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+
+
+rule pf_bam_scAPAtrap:
+    input: 
+        bam = "../../data/sim_data/bam_for_cprsb/{pf_sample}.bam",
+    params:
+        read_length=get_pf_read_length,
+        working_dir="../../data/result/benchmark_result/pf_bam_result/scapatrap/{pf_sample}",
+        current_path=CURRENT_PATH,
+    output: 
+        "../../data/result/benchmark_result/pf_bam_result/scapatrap/{pf_sample}/pas.bed",
+        "../../data/result/benchmark_result/pf_bam_result/scapatrap/{pf_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapatrap.sif"
+    benchmark:
+        "performance/pf_bam/scapatrap/{pf_sample}.txt"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scapatrap/bin/activate && \
+        Rscript /run_scAPAtrap.R -b {params.current_path}{input.bam} -w {params.current_path}{params.working_dir} -r {params.read_length} -t {threads} -c CB -u UB > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+
+rule pf_bam_sierra:
+    input: 
+        bam = "../../data/sim_data/bam_for_cprsb/{pf_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam_for_cprsb/{pf_sample}.barcode_list.txt"
+    params:
+        reference="./annotation/gencode.vM25.annotation.gtf",
+        working_dir="../../data/result/benchmark_result/pf_bam_result/sierra/{pf_sample}",
+        current_path=CURRENT_PATH,
+    output: 
+        "../../data/result/benchmark_result/pf_bam_result/sierra/{pf_sample}/pas.bed",
+        "../../data/result/benchmark_result/pf_bam_result/sierra/{pf_sample}/pas_counts.tsv"
+    singularity:
+        "sif/sierra.sif"
+    benchmark:
+        "performance/pf_bam/sierra/{pf_sample}.txt"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /sierra/bin/activate && \
+        Rscript /run_sierra.R -b {params.current_path}{input.bam} -w {params.current_path}{params.working_dir} -c {params.current_path}{input.cellbarcode} -r {params.current_path}{params.reference} -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule pf_bam_infernape:
+    input:
+        bam = "../../data/sim_data/bam_for_cprsb/{pf_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam_for_cprsb/{pf_sample}.barcode_list.txt"
+    params:
+        working_dir="../../data/result/benchmark_result/pf_bam_result/infernape/{pf_sample}",
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/pf_bam_result/infernape/{pf_sample}/pas.bed",
+        "../../data/result/benchmark_result/pf_bam_result/infernape/{pf_sample}/pas_counts.tsv"
+    singularity:
+        "sif/infernape.sif"
+    benchmark:
+        "performance/pf_bam/infernape/{pf_sample}.txt"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /infernape/bin/activate && \
+        Rscript /run_infernape.R -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -w {params.current_path}{params.working_dir} -g mm10 -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule pf_bam_scapa:
+    input:
+        bam = "../../data/sim_data/bam_for_cprsb/{pf_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam_for_cprsb/{pf_sample}.barcode_list.txt"
+    params:
+        working_dir="../../data/result/benchmark_result/pf_bam_result/scapa/{pf_sample}",
+        read_length=get_pf_read_length,
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/pf_bam_result/scapa/{pf_sample}/pas.bed",
+        "../../data/result/benchmark_result/pf_bam_result/scapa/{pf_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapa.sif"
+    benchmark:
+        "performance/pf_bam/scapa/{pf_sample}.txt"
+    threads: 8
+    shell: 
+        """
+        exec /bin/bash -c 'source /scapa/bin/activate && \
+        Rscript /run_scapa.R -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -w {params.current_path}{params.working_dir} -g "Mm10" -t {threads} -l {params.read_length} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule pf_bam_scapture:
+    input:
+        bam = "../../data/sim_data/bam_for_cprsb/{pf_sample}.bam",
+    params:
+        reference="./annotation/gencode.vM25.annotation.gtf",
+        working_dir="../../data/result/benchmark_result/pf_bam_result/scapture/{pf_sample}",
+        current_path=CURRENT_PATH,
+        read_length=get_pf_read_length,
+    output:
+        "../../data/result/benchmark_result/pf_bam_result/scapture/{pf_sample}/pas.bed",
+        "../../data/result/benchmark_result/pf_bam_result/scapture/{pf_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapture.sif"
+    benchmark:
+        "performance/pf_bam/scapture/{pf_sample}.txt"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scapture/bin/activate && \
+        /run_scapture.sh -b {params.current_path}{input.bam} -o {params.current_path}{params.working_dir} -g mm10 -l {params.read_length} -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule pf_bam_scape:
+    input:
+        bam = "../../data/sim_data/bam_for_cprsb/{pf_sample}.bam",
+        cellbarcode = "../../data/sim_data/bam_for_cprsb/{pf_sample}.barcode_list.txt"
+    params:
+        reference="./annotation/gencode.vM25.scape_utr.bed",
+        working_dir="../../data/result/benchmark_result/pf_bam_result/scape/{pf_sample}",
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/pf_bam_result/scape/{pf_sample}/pas.bed",
+        "../../data/result/benchmark_result/pf_bam_result/scape/{pf_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scape.sif"
+    benchmark:
+        "performance/pf_bam/scape/{pf_sample}.txt"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scape/bin/activate && \
+        /run_scape.sh -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -r {params.current_path}{params.reference} -o {params.current_path}{params.working_dir} -t {threads} -g CB,UB > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+
+#
+rule raw_bam_scAPAtrap:
+    input: 
+        bam = "../../data/int_data/bam_to_detect_pas/{raw_sample}.bam",
+    params:
+        read_length=get_raw_read_length,
+        working_dir="../../data/result/benchmark_result/raw_bam_result/scapatrap/{raw_sample}",
+        current_path=CURRENT_PATH,
+    output: 
+        "../../data/result/benchmark_result/raw_bam_result/scapatrap/{raw_sample}/pas.bed",
+        "../../data/result/benchmark_result/raw_bam_result/scapatrap/{raw_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapatrap.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scapatrap/bin/activate && \
+        Rscript /run_scAPAtrap.R -b {params.current_path}{input.bam} -w {params.current_path}{params.working_dir} -r {params.read_length} -t {threads} -c CB -u UB > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+
+rule raw_bam_sierra:
+    input: 
+        bam = "../../data/int_data/bam_to_detect_pas/{raw_sample}.bam",
+        cellbarcode = "../../data/int_data/bam_to_detect_pas/{raw_sample}.barcode_list.txt"
+    params:
+        reference="./annotation/gencode.vM25.annotation.gtf",
+        working_dir="../../data/result/benchmark_result/raw_bam_result/sierra/{raw_sample}",
+        current_path=CURRENT_PATH,
+    output: 
+        "../../data/result/benchmark_result/raw_bam_result/sierra/{raw_sample}/pas.bed",
+        "../../data/result/benchmark_result/raw_bam_result/sierra/{raw_sample}/pas_counts.tsv"
+    singularity:
+        "sif/sierra.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /sierra/bin/activate && \
+        Rscript /run_sierra.R -b {params.current_path}{input.bam} -w {params.current_path}{params.working_dir} -c {params.current_path}{input.cellbarcode} -r {params.current_path}{params.reference} -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule raw_bam_infernape:
+    input:
+        bam = "../../data/int_data/bam_to_detect_pas/{raw_sample}.bam",
+        cellbarcode = "../../data/int_data/bam_to_detect_pas/{raw_sample}.barcode_list.txt"
+    params:
+        working_dir="../../data/result/benchmark_result/raw_bam_result/infernape/{raw_sample}",
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/raw_bam_result/infernape/{raw_sample}/pas.bed",
+        "../../data/result/benchmark_result/raw_bam_result/infernape/{raw_sample}/pas_counts.tsv"
+    singularity:
+        "sif/infernape.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /infernape/bin/activate && \
+        Rscript /run_infernape.R -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -w {params.current_path}{params.working_dir} -g mm10 -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule raw_bam_scapa:
+    input:
+        bam = "../../data/int_data/bam_to_detect_pas/{raw_sample}.bam",
+        cellbarcode = "../../data/int_data/bam_to_detect_pas/{raw_sample}.barcode_list.txt"
+    params:
+        working_dir="../../data/result/benchmark_result/raw_bam_result/scapa/{raw_sample}",
+        read_length=get_raw_read_length,
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/raw_bam_result/scapa/{raw_sample}/pas.bed",
+        "../../data/result/benchmark_result/raw_bam_result/scapa/{raw_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapa.sif"
+    threads: 8
+    shell: 
+        """
+        exec /bin/bash -c 'source /scapa/bin/activate && \
+        Rscript /run_scapa.R -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -w {params.current_path}{params.working_dir} -g "Mm10" -t {threads} -l {params.read_length} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule raw_bam_scapture:
+    input:
+        bam = "../../data/int_data/bam_to_detect_pas/{raw_sample}.bam",
+    params:
+        reference="./annotation/gencode.vM25.annotation.gtf",
+        working_dir="../../data/result/benchmark_result/raw_bam_result/scapture/{raw_sample}",
+        current_path=CURRENT_PATH,
+        read_length=get_raw_read_length,
+    output:
+        "../../data/result/benchmark_result/raw_bam_result/scapture/{raw_sample}/pas.bed",
+        "../../data/result/benchmark_result/raw_bam_result/scapture/{raw_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scapture.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scapture/bin/activate && \
+        /run_scapture.sh -b {params.current_path}{input.bam} -o {params.current_path}{params.working_dir} -g mm10 -l {params.read_length} -t {threads} > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+rule raw_bam_scape:
+    input:
+        bam = "../../data/int_data/bam_to_detect_pas/{raw_sample}.bam",
+        cellbarcode = "../../data/int_data/bam_to_detect_pas/{raw_sample}.barcode_list.txt"
+    params:
+        reference="./annotation/gencode.vM25.scape_utr.bed",
+        working_dir="../../data/result/benchmark_result/raw_bam_result/scape/{raw_sample}",
+        current_path=CURRENT_PATH,
+    output:
+        "../../data/result/benchmark_result/raw_bam_result/scape/{raw_sample}/pas.bed",
+        "../../data/result/benchmark_result/raw_bam_result/scape/{raw_sample}/pas_counts.tsv"
+    singularity:
+        "sif/scape.sif"
+    threads: 8
+    shell:
+        """
+        exec /bin/bash -c 'source /scape/bin/activate && \
+        /run_scape.sh -b {params.current_path}{input.bam} -c {params.current_path}{input.cellbarcode} -r {params.current_path}{params.reference} -o {params.current_path}{params.working_dir} -t {threads} -g CB,UB > {params.current_path}{params.working_dir}/log.txt'
+        """
+
+# benchmark performance
+
+
+
+rule calculate_performance:
+    input:
+        pd_pas="../../data/result/benchmark_result/sim_bam_result/{tool}/{sim_sample}/pas.bed",
+        pd_mtx="../../data/result/benchmark_result/sim_bam_result/{tool}/{sim_sample}/pas_counts.tsv",
+        gt_pas=get_gt_bed,
+        gt_mtx=get_gt_mtx,
+    params:
+        tool="{tool}",
+        output_dir="/root/apabenchmark/data/performance",
+        sample_id="{sim_sample}",
+    output:        
+        "../../data/result/tool_performance/{tool}/{sim_sample}_match_performance.tsv",
+        "../../data/result/tool_performance/{tool}/{sim_sample}_pas_quantify_performance.tsv",
+        "../../data/result/tool_performance/{tool}/{sim_sample}_de_apa_performance.tsv",
+        "../../data/result/tool_performance/{tool}/{sim_sample}_match_pas.csv",
+        "../../data/result/tool_performance/{tool}/{sim_sample}_match_te.csv",
+    conda: "dexseq"
+    shell:
+        """
+        Rscript /root/apabenchmark/preprocess_scripts/calculate_benchmark_performance.R \
+            --pd_pas {input.pd_pas} \
+            --pd_mtx {input.pd_mtx} \
+            --gt_pas {input.gt_pas} \
+            --gt_mtx {input.gt_mtx} \
+            --tool {params.tool} \
+            --sample {params.sample_id} \
+            --output_dir {params.output_dir} \
+        """
+
+rule calculate_te_gap:
+    input:
+        pd_pas="/root/apabenchmark/data/sim_bam_result/{tool}/{sim_sample}/pas.bed",
+        gt_pas=get_gt_bed,
+        gt_mtx=get_gt_mtx,
+        genome_size="/root/nfsdata/REFERENCE/GENOME/MOUSE/vm25/GRCm38.p6.genome.fa.size",
+    params:
+        tool="{tool}",
+        output_dir="/root/apabenchmark/data/performance",
+        sample_id="{sim_sample}",
+    output:
+        "../../data/result/tool_performance/{tool}/{sim_sample}_te_gap.tsv",
+    shell:
+        """
+        python calculate_te_gap.py \
+            --pd_pas {input.pd_pas} \
+            --gt_pas {input.gt_pas} \
+            --gt_mtx {input.gt_mtx} \
+            --tool {params.tool} \
+            --sample {params.sample_id} \
+            --output_dir {params.output_dir} \
+            --genome_size {input.genome_size}
+        """
+
+rule merge_benchmark_performance:

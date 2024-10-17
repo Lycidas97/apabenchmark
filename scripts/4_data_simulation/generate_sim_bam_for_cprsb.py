@@ -1,7 +1,7 @@
 import sys
 
-sys.path.append("./apasim_dev/")
-from apasim_dev import generate_sim_bam
+sys.path.append("../apasim/")
+from simulation import generate_sim_bam
 import pandas as pd
 from argparse import ArgumentParser
 import os
