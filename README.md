@@ -30,7 +30,6 @@ Alternative polyadenylation (APA) is a widespread post-transcriptional regulator
 5. Run the scripts in the order specified by the README files to reproduce the analysis and generate the results.
 
 6. The generated output files and figures will be saved in the `data/int_data/` directory.
-7. 
 ## Contact
 
 For questions or feedback, please contact:
