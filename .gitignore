@@ -1,0 +1,51 @@
+scripts/test/
+data/
+
+# Raw and generated annotation payloads are large and reproducible.
+data/raw_data/annotations/HumanPas/
+data/raw_data/annotations/MousePas/
+data/raw_data/annotations/*.zip
+data/raw_data/annotations/*.gz
+data/raw_data/annotations/*.gtf
+data/raw_data/annotations/*.bed
+data/raw_data/annotations/*.pkl
+data/raw_data/annotations/*.svg
+data/int_data/annotations/*.bed
+
+# Snakemake runtime/cache artifacts
+.snakemake/
+
+# Benchmark runtime logs
+scripts/05_benchmark_analysis/logs/
+scripts/05_benchmark_analysis/snakemake.log
+scripts/05_benchmark_analysis/tests/**/logs/
+scripts/02_peak_analysis/snakemake.log
+scripts/04_benchmark/snakemake_profile/sample.yaml
+
+# Generated plotting outputs and runtime logs
+scripts/06_plotting/**/figures/**/*.pdf
+scripts/06_plotting/**/figures/*.pdf
+scripts/06_plotting/**/logs/
+scripts/06_plotting/**/output/
+scripts/06_plotting/**/data/intermediate/
+scripts/06_plotting/**/tests/**/output/
+scripts/06_plotting/**/nohup.out
+scripts/06_plotting/**/*.pid
+scripts/06_plotting/**/*.log
+scripts/06_plotting/**/*.parquet
+
+# Python runtime caches
+__pycache__/
+*.pyc
+
+# Local temporary/debug outputs
+tmp/
+tmpd/
+tmpd2/
+tmpd3/
+tmpd4/
+tmp_pas_counts.tsv
+
+# Local-only experimental preprocessing modules (do not commit)
+scripts/06_plotting/raw_data_performance/scripts/local/
+scripts/06_plotting/raw_data_performance/data/intermediate/raw_data_recall_gt_with_truncnorm.parquet

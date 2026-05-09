@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this pre-release repository, cite the repository metadata below. Replace this file with manuscript citation details when available."
+title: "APA Benchmark Reproducibility Package"
+authors:
+  - name: "APA Benchmark authors"
+version: "0.1.0-pre"
+date-released: "2026-05-07"
+repository-code: "https://github.com/Lycidas97/apabenchmark"
+url: "https://github.com/Lycidas97/apabenchmark"
+abstract: "Workflow code for reproducing APA benchmark analyses from prepared raw inputs through simulation, benchmark execution, performance analysis, and figure generation."
+license: "MIT"

@@ -1,0 +1,70 @@
+{
+  "size_presets_mm": {
+    "single_column": [75, 100],
+    "narrow_tall": [60, 170],
+    "full_wide": [185, 100],
+    "residual_scatter": [70, 50],
+    "residual_scatter_main": [90, 50],
+    "f1_stringency_regression": [90, 70],
+    "heatmap_wh_mm": [140, 70]
+  },
+  "figure_sizes_mm": {
+    "pas_detect_performance.pdf": [70, 100],
+    "pas_quantification_performance.pdf": [70, 100],
+    "apa_detect_performance.pdf": [180, 100],
+    "apa_detect_single_filter_performance.pdf": [175, 100],
+    "pas_detect_precision_by_protocol.pdf": [60, 170],
+    "pas_detect_recall_by_protocol.pdf": [60, 170],
+    "pas_detect_f1_by_protocol.pdf": [60, 170],
+    "pas_quantification_cor_pas_by_protocol.pdf": [60, 170],
+    "pas_quantification_mape_pas_by_protocol.pdf": [60, 170],
+    "pas_quantification_mape_pas_ct_by_protocol.pdf": [60, 170],
+    "apa_detect_precision_by_protocol.pdf": [60, 170],
+    "apa_detect_recall_by_protocol.pdf": [60, 170],
+    "apa_detect_f1_by_protocol.pdf": [60, 170],
+    "apa_detect_single_filter_precision_by_protocol.pdf": [60, 170],
+    "apa_detect_single_filter_recall_by_protocol.pdf": [60, 170],
+    "apa_detect_single_filter_f1_by_protocol.pdf": [60, 170],
+    "filter_residuals_heatmap.pdf": [140, 70],
+    "max_residuals_vs_gt_recall_with_arrows.pdf": [90, 50],
+    "f1_vs_stringency_linear_regression.pdf": [90, 70]
+  },
+  "render": {
+    "savefig_dpi": 300,
+    "per_figure_dpi": 300
+  },
+  "layout": {
+    "overall_hspace": 0.25,
+    "by_protocol_hspace": 0.25,
+    "by_protocol_left": 0.12,
+    "by_protocol_right": 0.88,
+    "by_protocol_top": 0.82,
+    "by_protocol_bottom": 0.08,
+    "pas_by_protocol_legend_y": 0.98,
+    "pas_quant_by_protocol_legend_y": 0.98,
+    "apa_by_protocol_legend_y": 0.98
+  },
+  "boxplot": {
+    "overall_width": 0.8,
+    "by_protocol_width": 0.7,
+    "single_filter_width": 0.8,
+    "single_filter_by_protocol_width": 0.7,
+    "showfliers": false,
+    "by_protocol_linewidth": 0.4
+  },
+  "grid": {
+    "overall_linestyle": "--",
+    "overall_alpha": 0.6,
+    "overall_linewidth": 0.5,
+    "by_protocol_linestyle": ":",
+    "by_protocol_linewidth": 0.3
+  },
+  "pairwise_heatmap": {
+    "cmap": "RdBu",
+    "figsize_mm": [120, 105],
+    "annot_as_percent": false,
+    "annot_show_n": false,
+    "annot_fontsize": 6
+  },
+  "rcParams": {}
+}

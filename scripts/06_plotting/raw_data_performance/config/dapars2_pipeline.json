@@ -1,0 +1,14 @@
+{
+  "pipeline_root": "raw_dapars2_parallel",
+  "tools_mode": "all",
+  "selected_tools": [
+    "dapars2",
+    "scmapa"
+  ],
+  "include_ground_truth": true,
+  "domains": {
+    "converted_inputs": true,
+    "differential_apa": true,
+    "performance": true
+  }
+}

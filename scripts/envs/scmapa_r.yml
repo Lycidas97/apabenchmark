@@ -1,0 +1,28 @@
+name: scmapa_r
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - r-base=4.2
+  - r-argparse
+  - r-dplyr
+  - r-tidyr
+  - r-readr
+  - r-stringr
+  - r-ggplot2
+  - r-data.table
+  - r-devtools
+  - r-remotes
+  - r-multcomp
+  - r-lmtest
+  - r-wec
+  - r-matrix.utils
+  - r-scmapa
+  - bioconductor-dexseq
+  - bioconductor-genomicranges
+  - bioconductor-biocparallel
+  - bioconductor-summarizedexperiment
+  - bioconductor-genefilter
+  - bedtools
+  - python=3.10

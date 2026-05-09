@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+"""Render single-filter APA detect overall panel for sim data performance."""
+
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+PLOT_ROOT = SCRIPT_DIR.parents[1]
+if str(PLOT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PLOT_ROOT))
+
+from _shared.paths import topic_figure_dir
+from _shared.style import apply_reference_style, save_figure
+
+from _plot_helpers import (
+    TOPIC,
+    available_tool_order,
+    black_boxplot_props,
+    load_single_filter_apa_table,
+    tool_palette,
+    trim_metric_to_quantile,
+)
+from _plot_config import apply_runtime_rcparams, cfg, cfg_bool, cfg_float, figsize_for_figure
+
+OUTPUT_NAME = "apa_detect_single_filter_performance.pdf"
+METRICS = ["precision", "recall", "f1"]
+
+
+def main() -> None:
+    apply_reference_style()
+    apply_runtime_rcparams()
+    df = load_single_filter_apa_table()
+    tool_order = available_tool_order(df)
+
+    fig, axes = plt.subplots(3, 1, figsize=figsize_for_figure(OUTPUT_NAME, "full_wide"))
+    fig.subplots_adjust(hspace=cfg_float("layout.overall_hspace", 0.25))
+
+    for idx, metric in enumerate(METRICS):
+        ax = axes[idx]
+        plot_data = trim_metric_to_quantile(df, metric)
+        sns.boxplot(
+            data=plot_data,
+            x="tool",
+            y=metric,
+            hue="tool",
+            order=tool_order,
+            hue_order=tool_order,
+            palette=tool_palette(tool_order),
+            width=cfg_float("boxplot.single_filter_width", 0.8),
+            ax=ax,
+            showfliers=cfg_bool("boxplot.showfliers", False),
+            **black_boxplot_props(cfg_float("boxplot.overall_linewidth", 0.5)),
+            dodge=False,
+            legend=False,
+        )
+        ax.grid(
+            linestyle=str(cfg("grid.overall_linestyle", "--")),
+            alpha=cfg_float("grid.overall_alpha", 0.6),
+            linewidth=cfg_float("grid.overall_linewidth", 0.5),
+        )
+        ax.set_ylabel(metric.capitalize())
+
+        if idx != len(METRICS) - 1:
+            ax.set_xlabel("")
+            ax.set_xticklabels([])
+        else:
+            ax.set_xlabel("Tool")
+
+    out_path = topic_figure_dir(TOPIC) / OUTPUT_NAME
+    save_figure(fig, out_path)
+    plt.close(fig)
+    print(f"Wrote figure: {out_path}")
+
+
+if __name__ == "__main__":
+    main()

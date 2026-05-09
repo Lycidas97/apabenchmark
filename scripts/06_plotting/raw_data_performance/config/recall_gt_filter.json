@@ -1,0 +1,27 @@
+{
+  "metric_domains": [
+    "raw_de_apa_performance",
+    "raw_dapars2_performance"
+  ],
+  "filter_pairs": [
+    {
+      "filter_type_1": "dexseq_0.05",
+      "filter_type_2": "dexseq_log2fc_1"
+    },
+    {
+      "filter_type_1": "dexseq_0.05",
+      "filter_type_2": "dexseq_log2fc_1.25"
+    },
+    {
+      "filter_type_1": "fisher_0.05",
+      "filter_type_2": "MPRO_0.5"
+    }
+  ],
+  "gt_rules": {
+    "drop_gt_zero": true,
+    "min_gt_count": 1
+  },
+  "recall_rules": {
+    "drop_all_tool_zero_recall_sample_pairs": true
+  }
+}

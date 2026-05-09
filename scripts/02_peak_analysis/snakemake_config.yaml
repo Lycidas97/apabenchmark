@@ -1,0 +1,1157 @@
+sample:
+  Chromium_human_embryolimb_5386STDY7557335:
+    bam_path: ./data/bam/Chromium_human_embryolimb_5386STDY7557335.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_5386STDY7557336:
+    bam_path: ./data/bam/Chromium_human_embryolimb_5386STDY7557336.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_5478STDY7652318:
+    bam_path: ./data/bam/Chromium_human_embryolimb_5478STDY7652318.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_5478STDY7717492:
+    bam_path: ./data/bam/Chromium_human_embryolimb_5478STDY7717492.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_5478STDY7935102:
+    bam_path: ./data/bam/Chromium_human_embryolimb_5478STDY7935102.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_5478STDY7980349:
+    bam_path: ./data/bam/Chromium_human_embryolimb_5478STDY7980349.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_FCAImmP7536758:
+    bam_path: ./data/bam/Chromium_human_embryolimb_FCAImmP7536758.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_WSSSTHYst8796437:
+    bam_path: ./data/bam/Chromium_human_embryolimb_WSSSTHYst8796437.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_WSSSTHYst8796438:
+    bam_path: ./data/bam/Chromium_human_embryolimb_WSSSTHYst8796438.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_WSSSTHYst8796439:
+    bam_path: ./data/bam/Chromium_human_embryolimb_WSSSTHYst8796439.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_WSSSTHYst8796440:
+    bam_path: ./data/bam/Chromium_human_embryolimb_WSSSTHYst8796440.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_embryolimb_WSSSTHYst8796441:
+    bam_path: ./data/bam/Chromium_human_embryolimb_WSSSTHYst8796441.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_hairfollicle_HFU13:
+    bam_path: ./data/bam/Chromium_human_hairfollicle_HFU13.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_hairfollicle_HFU14:
+    bam_path: ./data/bam/Chromium_human_hairfollicle_HFU14.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D17PzBA4f83:
+    bam_path: ./data/bam/Chromium_human_prostate_D17PzBA4f83.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D17PzBAe8cb:
+    bam_path: ./data/bam/Chromium_human_prostate_D17PzBAe8cb.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D17PzEP575c:
+    bam_path: ./data/bam/Chromium_human_prostate_D17PzEP575c.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D17PzPEd6cd:
+    bam_path: ./data/bam/Chromium_human_prostate_D17PzPEd6cd.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D17PzPS2c92:
+    bam_path: ./data/bam/Chromium_human_prostate_D17PzPS2c92.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D17TzPEbb82:
+    bam_path: ./data/bam/Chromium_human_prostate_D17TzPEbb82.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27PzPE2283:
+    bam_path: ./data/bam/Chromium_human_prostate_D27PzPE2283.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27TzBAdb58:
+    bam_path: ./data/bam/Chromium_human_prostate_D27TzBAdb58.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27TzEP4082:
+    bam_path: ./data/bam/Chromium_human_prostate_D27TzEP4082.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27TzEPf5c4:
+    bam_path: ./data/bam/Chromium_human_prostate_D27TzEPf5c4.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27TzFI0e14:
+    bam_path: ./data/bam/Chromium_human_prostate_D27TzFI0e14.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27TzLUac99:
+    bam_path: ./data/bam/Chromium_human_prostate_D27TzLUac99.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27TzPE4d6a:
+    bam_path: ./data/bam/Chromium_human_prostate_D27TzPE4d6a.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D27TzSMb1e2:
+    bam_path: ./data/bam/Chromium_human_prostate_D27TzSMb1e2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D35PzPE091d:
+    bam_path: ./data/bam/Chromium_human_prostate_D35PzPE091d.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_human_prostate_D35TzPEeeec:
+    bam_path: ./data/bam/Chromium_human_prostate_D35TzPEeeec.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_olfactorybulb_GSM3449587:
+    bam_path: ./data/bam/Chromium_mouse_olfactorybulb_GSM3449587.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_olfactorybulb_GSM3449588:
+    bam_path: ./data/bam/Chromium_mouse_olfactorybulb_GSM3449588.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_olfactorybulb_GSM3449591:
+    bam_path: ./data/bam/Chromium_mouse_olfactorybulb_GSM3449591.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_olfactorybulb_GSM3449592:
+    bam_path: ./data/bam/Chromium_mouse_olfactorybulb_GSM3449592.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E13Cd90S1:
+    bam_path: ./data/bam/Chromium_mouse_retina_E13Cd90S1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E13L1camS1:
+    bam_path: ./data/bam/Chromium_mouse_retina_E13L1camS1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E14Cd90S1:
+    bam_path: ./data/bam/Chromium_mouse_retina_E14Cd90S1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E14Cd90S2:
+    bam_path: ./data/bam/Chromium_mouse_retina_E14Cd90S2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E14L1camS1:
+    bam_path: ./data/bam/Chromium_mouse_retina_E14L1camS1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E16Cd90S1:
+    bam_path: ./data/bam/Chromium_mouse_retina_E16Cd90S1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E16Cd90S2:
+    bam_path: ./data/bam/Chromium_mouse_retina_E16Cd90S2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E16L1camS1:
+    bam_path: ./data/bam/Chromium_mouse_retina_E16L1camS1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_E16L1camS2:
+    bam_path: ./data/bam/Chromium_mouse_retina_E16L1camS2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_P0Cd90S1:
+    bam_path: ./data/bam/Chromium_mouse_retina_P0Cd90S1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_P0Cd90S2:
+    bam_path: ./data/bam/Chromium_mouse_retina_P0Cd90S2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_P0L1camS1:
+    bam_path: ./data/bam/Chromium_mouse_retina_P0L1camS1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_retina_P0L1camS2:
+    bam_path: ./data/bam/Chromium_mouse_retina_P0L1camS2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_testicle_GSM5595992:
+    bam_path: ./data/bam/Chromium_mouse_testicle_GSM5595992.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Chromium_mouse_testicle_GSM5595993:
+    bam_path: ./data/bam/Chromium_mouse_testicle_GSM5595993.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Dropseq_human_brain_SRR5454665:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454665.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454666:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454666.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454667:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454667.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454668:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454668.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454669:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454669.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454670:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454670.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454671:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454671.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454672:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454672.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454673:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454673.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454674:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454674.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454675:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454675.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454676:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454676.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454677:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454677.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454678:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454678.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454679:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454679.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454681:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454681.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454682:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454682.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454683:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454683.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454684:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454684.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454685:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454685.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454686:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454686.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454687:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454687.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454688:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454688.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454689:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454689.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454690:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454690.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454691:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454691.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454692:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454692.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454693:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454693.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454694:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454694.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454695:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454695.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454696:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454696.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454697:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454697.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454698:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454698.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454699:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454699.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454700:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454700.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454701:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454701.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454702:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454702.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454703:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454703.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454704:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454704.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454705:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454705.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454706:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454706.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454707:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454707.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454708:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454708.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454709:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454709.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454710:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454710.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454711:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454711.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454712:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454712.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454713:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454713.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454714:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454714.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454715:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454715.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454716:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454716.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454717:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454717.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454718:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454718.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454719:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454719.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454720:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454720.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454721:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454721.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454722:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454722.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5454723:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5454723.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904942:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904942.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904943:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904943.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904944:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904944.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904945:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904945.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904946:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904946.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904947:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904947.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904948:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904948.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904949:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904949.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904950:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904950.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904951:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904951.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904952:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904952.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904953:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904953.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904954:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904954.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904955:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904955.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904956:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904956.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904957:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904957.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904958:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904958.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904959:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904959.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904960:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904960.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904961:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904961.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904962:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904962.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904963:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904963.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904964:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904964.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904965:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904965.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904966:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904966.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904967:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904967.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904968:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904968.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_brain_SRR5904969:
+    bam_path: ./data/bam/Dropseq_human_brain_SRR5904969.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_hairfollicle_SRR8888416:
+    bam_path: ./data/bam/Dropseq_human_hairfollicle_SRR8888416.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_hairfollicle_SRR8888417:
+    bam_path: ./data/bam/Dropseq_human_hairfollicle_SRR8888417.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_human_hairfollicle_SRR8888418:
+    bam_path: ./data/bam/Dropseq_human_hairfollicle_SRR8888418.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_epithelial_SRR11589514:
+    bam_path: ./data/bam/Dropseq_mouse_epithelial_SRR11589514.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_epithelial_SRR11589515:
+    bam_path: ./data/bam/Dropseq_mouse_epithelial_SRR11589515.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_epithelial_SRR11589516:
+    bam_path: ./data/bam/Dropseq_mouse_epithelial_SRR11589516.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_epithelial_SRR11589517:
+    bam_path: ./data/bam/Dropseq_mouse_epithelial_SRR11589517.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_epithelial_SRR11589518:
+    bam_path: ./data/bam/Dropseq_mouse_epithelial_SRR11589518.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_epithelial_SRR11589520:
+    bam_path: ./data/bam/Dropseq_mouse_epithelial_SRR11589520.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_epithelial_SRR11589521:
+    bam_path: ./data/bam/Dropseq_mouse_epithelial_SRR11589521.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_heart_SRR7515702:
+    bam_path: ./data/bam/Dropseq_mouse_heart_SRR7515702.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_heart_SRR7515703:
+    bam_path: ./data/bam/Dropseq_mouse_heart_SRR7515703.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426360:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426360.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426363:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426363.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426365:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426365.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426366:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426366.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426368:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426368.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426369:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426369.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426370:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426370.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_lung_SRR8426371:
+    bam_path: ./data/bam/Dropseq_mouse_lung_SRR8426371.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904661:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904661.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904663:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904663.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904664:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904664.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904672:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904672.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904675:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904675.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904676:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904676.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904677:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904677.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904678:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904678.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904680:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904680.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904681:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904681.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904683:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904683.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR6904684:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR6904684.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601882:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601882.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601883:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601883.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601885:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601885.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601886:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601886.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601887:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601887.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601888:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601888.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601889:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601889.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601890:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601890.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601891:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601891.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601892:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601892.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601893:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601893.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601894:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601894.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601895:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601895.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601896:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601896.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601897:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601897.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601898:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601898.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601899:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601899.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601901:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601901.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601902:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601902.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601903:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601903.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601904:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601904.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601905:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601905.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601906:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601906.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601907:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601907.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601908:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601908.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601909:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601909.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601910:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601910.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601911:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601911.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Dropseq_mouse_testicle_SRR8601912:
+    bam_path: ./data/bam/Dropseq_mouse_testicle_SRR8601912.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887749:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887749.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887752:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887752.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887753:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887753.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887755:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887755.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887756:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887756.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887758:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887758.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887759:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887759.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887763:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887763.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887765:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887765.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887766:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887766.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887770:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887770.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_human_embryo_SRR9887771:
+    bam_path: ./data/bam/Microwell_human_embryo_SRR9887771.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_brain_GSM4647178:
+    bam_path: ./data/bam/Microwell_mouse_brain_GSM4647178.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_brain_GSM6731158:
+    bam_path: ./data/bam/Microwell_mouse_brain_GSM6731158.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_testicle_GSM4647336:
+    bam_path: ./data/bam/Microwell_mouse_testicle_GSM4647336.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Microwell_mouse_testicle_GSM4647337:
+    bam_path: ./data/bam/Microwell_mouse_testicle_GSM4647337.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_E15-brain_Puck19092119:
+    bam_path: ./data/bam/Slideseq_mouse_E15-brain_Puck19092119.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_embryo_Puck19092603:
+    bam_path: ./data/bam/Slideseq_mouse_embryo_Puck19092603.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_hippocampus_Puck19120401:
+    bam_path: ./data/bam/Slideseq_mouse_hippocampus_Puck19120401.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_hippocampus_Puck19121917:
+    bam_path: ./data/bam/Slideseq_mouse_hippocampus_Puck19121917.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_hippocampus_Puck19121918:
+    bam_path: ./data/bam/Slideseq_mouse_hippocampus_Puck19121918.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_hippocampus_Puck19121920:
+    bam_path: ./data/bam/Slideseq_mouse_hippocampus_Puck19121920.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_hippocampus_Puck20011508:
+    bam_path: ./data/bam/Slideseq_mouse_hippocampus_Puck20011508.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173925:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173925.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173926:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173926.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173927:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173927.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173928:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173928.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173929:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173929.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173955:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173955.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173956:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173956.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173960:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173960.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173961:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173961.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173962:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173962.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173963:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173963.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_olfactorybulb_GSM5173964:
+    bam_path: ./data/bam/Slideseq_mouse_olfactorybulb_GSM5173964.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12805491:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12805491.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12805492:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12805492.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12805493:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12805493.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12805494:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12805494.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12808110:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12808110.bam
+    barcode_tag: XC
+    umi_tag: XM
+  Slideseq_mouse_testicle_SRR12808111:
+    bam_path: ./data/bam/Slideseq_mouse_testicle_SRR12808111.bam
+    barcode_tag: XC
+    umi_tag: XM
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep10MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep11MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep12MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep12MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep1MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep1MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep2MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep2MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep3MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep3MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep4MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep4MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep6MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep6MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep7MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep7MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep8MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep8MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_olfactorybulb_Rep9MOB:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_olfactorybulb_Rep9MOB.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_spine_L7CN78D2:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_spine_L7CN78D2.bam
+    barcode_tag: B0
+    umi_tag: B3
+  SpatialTranscriptomics_mouse_spine_L8CN22C1:
+    bam_path: ./data/bam/SpatialTranscriptomics_mouse_spine_L8CN22C1.bam
+    barcode_tag: B0
+    umi_tag: B3
+  Stereoseq_mouse_brain_C03937C4:
+    bam_path: ./data/bam/Stereoseq_mouse_brain_C03937C4.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520768:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520768.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520771:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520771.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520772:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520772.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520773:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520773.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520774:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520774.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520776:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520776.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520778:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520778.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_CNS0520779:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_CNS0520779.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_MouseE145E1S2:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_MouseE145E1S2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_embryo_MouseE145E1S3:
+    bam_path: ./data/bam/Stereoseq_mouse_embryo_MouseE145E1S3.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_kidney_C02533C1:
+    bam_path: ./data/bam/Stereoseq_mouse_kidney_C02533C1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_olfactorybulb_MouseolfaS1:
+    bam_path: ./data/bam/Stereoseq_mouse_olfactorybulb_MouseolfaS1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_olfactorybulb_MouseolfaS2:
+    bam_path: ./data/bam/Stereoseq_mouse_olfactorybulb_MouseolfaS2.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_ovary_B04372C211:
+    bam_path: ./data/bam/Stereoseq_mouse_ovary_B04372C211.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Stereoseq_mouse_tongue_B04372C214:
+    bam_path: ./data/bam/Stereoseq_mouse_tongue_B04372C214.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_liver_C73D1:
+    bam_path: ./data/bam/Visium_human_liver_C73D1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V160CGNDHRA02636C:
+    bam_path: ./data/bam/Visium_human_spinalcord_V160CGNDHRA02636C.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V160CGNDHRA02636D:
+    bam_path: ./data/bam/Visium_human_spinalcord_V160CGNDHRA02636D.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V161CGNDHRA02636D:
+    bam_path: ./data/bam/Visium_human_spinalcord_V161CGNDHRA02636D.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V225CGNDHRC00022A:
+    bam_path: ./data/bam/Visium_human_spinalcord_V225CGNDHRC00022A.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V225CGNDHRC00022B:
+    bam_path: ./data/bam/Visium_human_spinalcord_V225CGNDHRC00022B.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V225CGNDHRC00023C:
+    bam_path: ./data/bam/Visium_human_spinalcord_V225CGNDHRC00023C.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V225CGNDHRC00023D:
+    bam_path: ./data/bam/Visium_human_spinalcord_V225CGNDHRC00023D.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V226CGNDHRC00022A:
+    bam_path: ./data/bam/Visium_human_spinalcord_V226CGNDHRC00022A.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V226CGNDHRC00022B:
+    bam_path: ./data/bam/Visium_human_spinalcord_V226CGNDHRC00022B.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V226CGNDHRC00023C:
+    bam_path: ./data/bam/Visium_human_spinalcord_V226CGNDHRC00023C.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V226CGNDHRC00023D:
+    bam_path: ./data/bam/Visium_human_spinalcord_V226CGNDHRC00023D.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V229CGNDHRC00025C:
+    bam_path: ./data/bam/Visium_human_spinalcord_V229CGNDHRC00025C.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V229CGNDHRC00025D:
+    bam_path: ./data/bam/Visium_human_spinalcord_V229CGNDHRC00025D.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V230CGNDHRC00025C:
+    bam_path: ./data/bam/Visium_human_spinalcord_V230CGNDHRC00025C.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V233CGNDHRC00022A:
+    bam_path: ./data/bam/Visium_human_spinalcord_V233CGNDHRC00022A.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V233CGNDHRC00022B:
+    bam_path: ./data/bam/Visium_human_spinalcord_V233CGNDHRC00022B.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V233CGNDHRC00023C:
+    bam_path: ./data/bam/Visium_human_spinalcord_V233CGNDHRC00023C.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_human_spinalcord_V233CGNDHRC00023D:
+    bam_path: ./data/bam/Visium_human_spinalcord_V233CGNDHRC00023D.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_brain_V19L01-041-C1:
+    bam_path: ./data/bam/Visium_mouse_brain_V19L01-041-C1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_brain_V19L29-035-D1:
+    bam_path: ./data/bam/Visium_mouse_brain_V19L29-035-D1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_kidney_V19L29-096-B1:
+    bam_path: ./data/bam/Visium_mouse_kidney_V19L29-096-B1.bam
+    barcode_tag: CB
+    umi_tag: UB
+  Visium_mouse_olfactorybulb_V10N30-322-A1:
+    bam_path: ./data/bam/Visium_mouse_olfactorybulb_V10N30-322-A1.bam
+    barcode_tag: CB
+    umi_tag: UB

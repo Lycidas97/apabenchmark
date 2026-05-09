@@ -1,0 +1,1167 @@
+import csv
+import glob
+import os
+import re
+
+
+def resolve_project_root():
+    candidate_roots = [
+        os.environ.get("APABENCHMARK_FINAL_ROOT"),
+        os.environ.get("APABENCHMARK_ROOT"),
+        os.getcwd(),
+        os.path.abspath(os.path.join(os.getcwd(), "..", "..")),
+    ]
+    for root in candidate_roots:
+        if not root:
+            continue
+        data_dir = os.path.join(root, "data")
+        sim_gt_dir = os.path.join(data_dir, "sim_data", "bam")
+        sim_result_dir = os.path.join(data_dir, "result", "benchmark", "sim_bam")
+        if os.path.isdir(sim_gt_dir) and os.path.isdir(sim_result_dir):
+            return root
+    raise FileNotFoundError(
+        "Cannot resolve benchmark project root. Set APABENCHMARK_FINAL_ROOT to a directory containing data/sim_data/bam and data/result/benchmark/sim_bam."
+    )
+
+
+def resolve_workflow_dir():
+    env_dir = os.environ.get("APABENCHMARK_BENCHMARK5_DIR")
+    if env_dir:
+        return env_dir
+    if "workflow" in globals() and getattr(workflow, "basedir", None):
+        return workflow.basedir
+    return os.getcwd()
+
+
+def resolve_gene_tag(sim_ground_truth_dir):
+    env_tag = os.environ.get("APABENCHMARK_GENE_TAG")
+    if env_tag:
+        return env_tag
+
+    tag_counts = {}
+    for path in glob.glob(os.path.join(sim_ground_truth_dir, "*.bam.expr.tsv")):
+        match = re.search(r"(gn\d+)", os.path.basename(path))
+        if not match:
+            continue
+        tag = match.group(1)
+        tag_counts[tag] = tag_counts.get(tag, 0) + 1
+
+    if tag_counts:
+        return sorted(tag_counts.items(), key=lambda item: (-item[1], item[0]))[0][0]
+
+    return "gn2000"
+
+
+def resolve_dapars_exclude_file(data_dir):
+    env_file = os.environ.get("APABENCHMARK_DAPARS2_EXCLUDE_FILE")
+    candidates = [
+        env_file,
+        os.path.join(data_dir, "dapars2_single_group_exclude.txt"),
+        os.path.join(data_dir, "result", "dapars2_single_group_exclude.txt"),
+    ]
+    for candidate in candidates:
+        if candidate and os.path.exists(candidate):
+            return candidate
+    return candidates[1]
+
+
+def load_dapars_source_exclude_set(exclude_file):
+    if not os.path.exists(exclude_file):
+        return set()
+
+    excluded = set()
+    with open(exclude_file, "r", encoding="utf-8") as fh:
+        for raw_line in fh:
+            line = raw_line.strip()
+            if not line or line.startswith("#"):
+                continue
+            sample_key = line.split("\t")[0]
+            if "/" not in sample_key:
+                sample_key = f"dapars2/{sample_key}"
+            excluded.add(sample_key)
+    return excluded
+
+
+def has_required_dapars_groups(result_file, group1, group2):
+    required = {
+        f"{group1}_long_exp",
+        f"{group1}_short_exp",
+        f"{group2}_long_exp",
+        f"{group2}_short_exp",
+    }
+    try:
+        with open(result_file, "r", encoding="utf-8", errors="ignore") as fh:
+            header = fh.readline().strip()
+    except OSError:
+        return False
+
+    if not header:
+        return False
+    columns = set(header.split("\t"))
+    return required.issubset(columns)
+
+
+def parse_positive_int(value, label):
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        raise ValueError(f"{label} must be an integer >= 1, got: {value}")
+    if parsed < 1:
+        raise ValueError(f"{label} must be >= 1, got: {parsed}")
+    return parsed
+
+
+def resolve_positive_int(env_key, config_key, default_value):
+    env_value = os.environ.get(env_key)
+    if env_value is not None and str(env_value).strip() != "":
+        return parse_positive_int(env_value, env_key)
+
+    cfg_value = config.get(config_key)
+    if cfg_value is not None and str(cfg_value).strip() != "":
+        return parse_positive_int(cfg_value, f"config.{config_key}")
+
+    return default_value
+
+
+def resolve_pipeline_mode():
+    allowed = {"sim", "raw", "both", "raw_parallel"}
+    env_value = os.environ.get("APABENCHMARK_PIPELINE_MODE")
+    cfg_value = config.get("pipeline_mode")
+    raw_value = env_value if env_value is not None and str(env_value).strip() != "" else cfg_value
+    if raw_value is None:
+        return "sim"
+
+    mode = str(raw_value).strip().lower()
+    if mode not in allowed:
+        raise ValueError(
+            f"pipeline_mode must be one of {sorted(allowed)}, got: {raw_value}"
+        )
+    return mode
+
+
+def resolve_raw_output_base(data_dir):
+    env_value = os.environ.get("APABENCHMARK_RAW_OUTPUT_BASE")
+    cfg_value = config.get("raw_output_base")
+    raw_value = env_value if env_value is not None and str(env_value).strip() != "" else cfg_value
+    if raw_value is None:
+        return os.path.join(data_dir, "result", "raw")
+    return os.path.abspath(str(raw_value))
+
+
+def resolve_raw_run_id(default_value):
+    env_value = os.environ.get("APABENCHMARK_RAW_RUN_ID")
+    cfg_value = config.get("raw_run_id")
+    raw_value = env_value if env_value is not None and str(env_value).strip() != "" else cfg_value
+    run_id = str(raw_value if raw_value is not None else default_value).strip()
+    run_id = re.sub(r"[^A-Za-z0-9_.-]+", "_", run_id).strip("._")
+    if not run_id:
+        raise ValueError("raw_run_id resolved to empty value; set APABENCHMARK_RAW_RUN_ID or config.raw_run_id")
+    return run_id
+
+
+def resolve_dexseq_split_num(default_value):
+    return resolve_positive_int("APABENCHMARK_DEXSEQ_SPLIT_NUM", "dexseq_split_num", default_value)
+
+
+def infer_raw_manifest_defaults(raw_manifest_dir):
+    top3_path = os.path.join(raw_manifest_dir, "sample_top3_celltypes.tsv")
+    pair_path = os.path.join(raw_manifest_dir, "sample_pair_manifest.tsv")
+
+    sample_count = 5
+    pair_rank_max = 1
+
+    if os.path.exists(top3_path):
+        sample_set = set()
+        with open(top3_path, "r", encoding="utf-8", newline="") as fh:
+            reader = csv.DictReader(fh, delimiter="\t")
+            for row in reader:
+                sample = (row.get("sample") or "").strip()
+                if sample:
+                    sample_set.add(sample)
+        if sample_set:
+            sample_count = len(sample_set)
+
+    if os.path.exists(pair_path):
+        max_rank = None
+        with open(pair_path, "r", encoding="utf-8", newline="") as fh:
+            reader = csv.DictReader(fh, delimiter="\t")
+            for row in reader:
+                rank_text = (row.get("pair_rank") or "").strip()
+                if not rank_text:
+                    continue
+                rank = parse_positive_int(rank_text, "raw_pair_manifest.pair_rank")
+                if max_rank is None or rank > max_rank:
+                    max_rank = rank
+        if max_rank is not None:
+            pair_rank_max = max_rank
+
+    return sample_count, pair_rank_max
+
+
+APABENCHMARK_PROJECT_ROOT = resolve_project_root()
+DATA_DIR = os.path.join(APABENCHMARK_PROJECT_ROOT, "data")
+WORKFLOW_DIR = resolve_workflow_dir()
+SCRIPTS_DIR = os.path.join(WORKFLOW_DIR, "scripts")
+SCMAPA_DIR = os.path.join(WORKFLOW_DIR, "scmapa")
+CONDA_EXE = os.environ.get("APABENCHMARK_CONDA_EXE", "conda")
+DEXSEQ_ENV_NAME = os.environ.get("APABENCHMARK_DEXSEQ_ENV", "dexseq")
+SCMAPA_ENV_NAME = os.environ.get("APABENCHMARK_SCMAPA_ENV", "scmapa_r")
+PIPELINE_MODE = resolve_pipeline_mode()
+
+RAW_MANIFEST_DIR = os.path.join(DATA_DIR, "result", "benchmark", "analysis", "raw_pair_manifest")
+RAW_DEFAULT_TOP_N, RAW_DEFAULT_PAIR_RANK_MAX = infer_raw_manifest_defaults(RAW_MANIFEST_DIR)
+
+RAW_TOP_N = resolve_positive_int("APABENCHMARK_RAW_TOP_N", "raw_top_n", RAW_DEFAULT_TOP_N)
+RAW_SPLIT_NUM = resolve_positive_int("APABENCHMARK_RAW_SPLIT_NUM", "raw_split_num", 5)
+RAW_PAIR_RANK_MAX = resolve_positive_int(
+    "APABENCHMARK_RAW_PAIR_RANK_MAX",
+    "raw_pair_rank_max",
+    RAW_DEFAULT_PAIR_RANK_MAX,
+)
+DEXSEQ_DEFAULT_SPLIT_NUM = RAW_SPLIT_NUM if PIPELINE_MODE in {"raw", "raw_parallel"} else 6
+DEXSEQ_SPLIT_NUM = resolve_dexseq_split_num(DEXSEQ_DEFAULT_SPLIT_NUM)
+RAW_OUTPUT_BASE = resolve_raw_output_base(DATA_DIR)
+# Keep raw outputs in a stable run root by default (sim-like behavior).
+# Users can still override with APABENCHMARK_RAW_RUN_ID when they want a separate run root.
+RAW_RUN_ID = resolve_raw_run_id("default")
+RAW_RUN_ROOT = os.path.join(RAW_OUTPUT_BASE, RAW_RUN_ID)
+RAW_BENCHMARK_SCRIPT = os.path.join(WORKFLOW_DIR, "scripts", "run_raw_top_samples_split5.py")
+if not os.path.exists(RAW_BENCHMARK_SCRIPT):
+    RAW_BENCHMARK_SCRIPT = os.path.join(
+        APABENCHMARK_PROJECT_ROOT,
+        "scripts",
+        "05_benchmark_analysis",
+        "scripts",
+        "run_raw_top_samples_split5.py",
+    )
+if not os.path.exists(RAW_BENCHMARK_SCRIPT):
+    raise FileNotFoundError(
+        "Raw benchmark driver not found in 05 workflow. "
+        "Expected scripts/05_benchmark_analysis/scripts/run_raw_top_samples_split5.py"
+    )
+
+SIM_RESULT_DIR = os.path.join(DATA_DIR, "result", "benchmark", "sim_bam")
+SIM_GROUND_TRUTH_DIR = os.path.join(DATA_DIR, "sim_data", "bam")
+SIM_PAS_DIR = os.path.join(DATA_DIR, "sim_data", "sim_pas")
+TOOL_REFERENCE_DIR = os.path.join(DATA_DIR, "raw_data", "tool_reference")
+
+GENE_TAG = resolve_gene_tag(SIM_GROUND_TRUTH_DIR)
+
+PERFORMANCE_DIR = os.path.join(DATA_DIR, "result", "performance")
+DAPARS2_FORMAT_DIR = os.path.join(DATA_DIR, "result", "dapars2_format")
+DAPARS2_FORMAT_GROUND_TRUTH_DIR = os.path.join(DATA_DIR, "result", "dapars2_format_ground_truth")
+DIFFERENTIAL_APA_DIR = os.path.join(DATA_DIR, "result", "differential_apa")
+DIFFERENTIAL_APA_GROUND_TRUTH_DIR = os.path.join(DATA_DIR, "result", "differential_apa_ground_truth")
+
+SCMAPA_COMPARISON_MODE = "single"
+SCMAPA_GROUP1 = "T1"
+SCMAPA_GROUP2 = "T2"
+SCMAPA_NA_CUTOFF = 0
+SCMAPA_CPM_CUTOFF_LONG = 0.001
+SCMAPA_CPM_CUTOFF_SHORT = 0.001
+SCMAPA_COVERAGE_CUTOFF = 0.001
+SCMAPA_OR_CUTOFF = 0.1
+SCMAPA_AD_PVAL = 0.05
+
+SCMAPA_DAPARS_TOOLS = ["scmapa", "dapars2"]
+SCMAPA_DAPARS_GROUP1 = "Sample_1"
+SCMAPA_DAPARS_GROUP2 = "Sample_2"
+SCMAPA_DAPARS_T12_GROUP1 = "T1"
+SCMAPA_DAPARS_T12_GROUP2 = "T2"
+DAPARS2_SINGLE_GROUP_EXCLUDE_FILE = resolve_dapars_exclude_file(DATA_DIR)
+DAPARS_SOURCE_EXCLUDE_SET = load_dapars_source_exclude_set(DAPARS2_SINGLE_GROUP_EXCLUDE_FILE)
+
+pd_bed_list = glob.glob(os.path.join(SIM_RESULT_DIR, "*", f"*{GENE_TAG}*", "pas_fix.bed"))
+pd_bed_list.extend(glob.glob(os.path.join(SIM_RESULT_DIR, "*", f"*{GENE_TAG}*", "pas.bed")))
+pd_mtx_list = glob.glob(os.path.join(SIM_RESULT_DIR, "*", f"*{GENE_TAG}*", "pas_counts.tsv"))
+
+bed_dirs = set(os.path.dirname(bed) for bed in pd_bed_list)
+mtx_dirs = set(os.path.dirname(mtx) for mtx in pd_mtx_list)
+
+sample_dirs = sorted("/".join(sample_dir.split("/")[-2:]) for sample_dir in bed_dirs.intersection(mtx_dirs))
+dapars_parallel_sample_dirs = sorted(
+    sample for sample in sample_dirs if sample.split("/")[0] not in SCMAPA_DAPARS_TOOLS
+)
+
+gt_mtx_list = glob.glob(os.path.join(SIM_GROUND_TRUTH_DIR, f"*{GENE_TAG}*.bam.expr.tsv"))
+ground_truth_samples = sorted(os.path.basename(f).replace(".bam.expr.tsv", "") for f in gt_mtx_list)
+ground_truth_set = set(ground_truth_samples)
+
+dapars_result_files = []
+for tool in SCMAPA_DAPARS_TOOLS:
+    dapars_result_files.extend(
+        glob.glob(os.path.join(SIM_RESULT_DIR, tool, f"*{GENE_TAG}*", "DaPars2_Result_all_chrs.txt"))
+    )
+
+dapars_source_sample_set_sample12 = set()
+dapars_source_sample_set_t12 = set()
+for path in dapars_result_files:
+    sample_name = os.path.basename(os.path.dirname(path))
+    sample_dir = "/".join(path.split("/")[-3:-1])
+    if sample_name not in ground_truth_set:
+        continue
+    if sample_dir in DAPARS_SOURCE_EXCLUDE_SET:
+        continue
+    if has_required_dapars_groups(path, SCMAPA_DAPARS_GROUP1, SCMAPA_DAPARS_GROUP2):
+        dapars_source_sample_set_sample12.add(sample_dir)
+    elif has_required_dapars_groups(path, SCMAPA_DAPARS_T12_GROUP1, SCMAPA_DAPARS_T12_GROUP2):
+        dapars_source_sample_set_t12.add(sample_dir)
+
+dapars_source_sample_dirs_sample12 = sorted(dapars_source_sample_set_sample12)
+dapars_source_sample_dirs_t12 = sorted(dapars_source_sample_set_t12)
+dapars_source_sample_dirs = sorted(
+    set(dapars_source_sample_dirs_sample12).union(dapars_source_sample_dirs_t12)
+)
+dapars2_source_sample_dirs = sorted(
+    sample for sample in dapars_source_sample_dirs_sample12 if sample.startswith("dapars2/")
+)
+scmapa_source_sample_dirs = sorted(
+    sample for sample in dapars_source_sample_dirs_sample12 if sample.startswith("scmapa/")
+)
+
+
+def get_tool(wildcards):
+    return wildcards.sample.split("/")[0]
+
+
+def get_gt_bed(wildcards):
+    sample_name = get_sample_id(wildcards)
+    sample_parts = sample_name.split("_")
+    genome = extract_genome_from_sample_name(sample_name)
+    gene_number = sample_parts[-2]
+    pas_rep = sample_parts[-3].replace("pas", "")
+    return os.path.join(SIM_PAS_DIR, f"{genome}_sim_pas_{gene_number}_rep{pas_rep}.bed")
+
+
+def get_gt_mtx(wildcards):
+    bam = wildcards.sample.split("/")[-1]
+    return os.path.join(SIM_GROUND_TRUTH_DIR, f"{bam}.bam.expr.tsv")
+
+
+def get_pd_pas(wildcards):
+    sample_dir = os.path.join(SIM_RESULT_DIR, wildcards.sample)
+    preferred_path = os.path.join(sample_dir, "pas_fix.bed")
+    fallback_path = os.path.join(sample_dir, "pas.bed")
+    if os.path.exists(preferred_path):
+        return preferred_path
+    if os.path.exists(fallback_path):
+        return fallback_path
+    raise FileNotFoundError(
+        f"No PAS BED file found for {wildcards.sample}. Expected pas_fix.bed or pas.bed in {sample_dir}."
+    )
+
+
+def get_sample_id(wildcards):
+    return wildcards.sample.split("/")[-1]
+
+
+def get_gt_apa_for_dapars_source(wildcards):
+    sample_id = get_sample_id(wildcards)
+    return os.path.join(
+        DIFFERENTIAL_APA_GROUND_TRUTH_DIR,
+        sample_id,
+        f"{SCMAPA_GROUP1}_vs_{SCMAPA_GROUP2}",
+        "APA_results.txt",
+    )
+
+
+def get_gt_mtx_for_ground_truth(wildcards):
+    return os.path.join(SIM_GROUND_TRUTH_DIR, f"{wildcards.sample}.bam.expr.tsv")
+
+
+def extract_genome_from_sample_name(sample_name):
+    sample_parts = sample_name.split("_")
+    if len(sample_parts) < 4:
+        raise ValueError(f"Cannot parse genome token from sample name: {sample_name}")
+    genome_token = sample_parts[-4]
+    if genome_token not in {"hg38", "mm10"}:
+        raise ValueError(
+            f"Unsupported genome token '{genome_token}' in sample name {sample_name}. Expected one of: hg38, mm10."
+        )
+    return genome_token
+
+
+def get_genome_size(wildcards):
+    sample_name = get_sample_id(wildcards)
+    genome_name = extract_genome_from_sample_name(sample_name)
+    return os.path.join(TOOL_REFERENCE_DIR, f"{genome_name}.chrom.sizes")
+
+def get_species_from_sample(sample_name):
+    """Extract species from sample name based on genome annotation"""
+    if "hg38" in sample_name or "human" in sample_name.lower():
+        return "human"
+    elif "mm10" in sample_name or "mouse" in sample_name.lower():
+        return "mouse"
+    else:
+        # Default to mouse for mm10 in this dataset
+        return "mouse"
+
+def get_species_wildcards(wildcards):
+    """Get species from wildcards for both sample_dirs and ground_truth_samples"""
+    return get_species_from_sample(wildcards.sample)
+
+
+RAW_PREP_OUTPUTS = [
+    os.path.join(RAW_RUN_ROOT, "raw_pair_manifest", "sample_top3_celltypes.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_pair_manifest", "sample_pair_manifest.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_pair_manifest", "prepare_metadata.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_qc", "pas_filter_overview.tsv"),
+]
+
+RAW_SUMMARY_OUTPUTS = [
+    *RAW_PREP_OUTPUTS,
+    os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_match_metrics.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_pas_quantify_metrics.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_de_apa_metrics.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_missing_failed.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_dapars2_format", "summary", "raw_dapars2_metrics.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_dapars2_format", "summary", "raw_dapars2_missing_failed.tsv"),
+]
+
+RAW_DAPARS2_PARALLEL_SUMMARY_OUTPUTS = [
+    os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_metrics.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_missing_failed.tsv"),
+]
+RAW_DAPARS2_PARALLEL_PREP_DONE = os.path.join(
+    RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "prepare_inputs.done"
+)
+RAW_DAPARS2_PARALLEL_STAGE_FAILURE_OUTPUTS = [
+    os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_gt_failures.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_nondapars_failures.tsv"),
+    os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_dapars_failures.tsv"),
+]
+RAW_BAM_TOOLS = sorted(
+    [
+        name
+        for name in os.listdir(os.path.join(DATA_DIR, "result", "benchmark", "raw_bam"))
+        if os.path.isdir(os.path.join(DATA_DIR, "result", "benchmark", "raw_bam", name))
+    ]
+)
+RAW_DAPARS_TOOLS = [tool for tool in ["scmapa", "dapars2"] if tool in RAW_BAM_TOOLS]
+RAW_STANDARD_TOOLS = [tool for tool in RAW_BAM_TOOLS if tool not in RAW_DAPARS_TOOLS]
+RAW_PARALLEL_TOOLS = list(RAW_BAM_TOOLS)
+
+
+def _read_tsv(path):
+    with open(path, "r", encoding="utf-8", newline="") as fh:
+        return list(csv.DictReader(fh, delimiter="\t"))
+
+
+def resolve_raw_selected_pairs(raw_manifest_dir, top_n, pair_rank_max):
+    top3_rows = _read_tsv(os.path.join(raw_manifest_dir, "sample_top3_celltypes.tsv"))
+    pair_rows = _read_tsv(os.path.join(raw_manifest_dir, "sample_pair_manifest.tsv"))
+    totals = {}
+    for row in top3_rows:
+        sample = row["sample"]
+        totals[sample] = totals.get(sample, 0) + int(row["cell_count"])
+
+    ranked = sorted(totals.items(), key=lambda x: (-x[1], x[0]))
+    selected_samples = {s for s, _ in ranked[:top_n]}
+    selected_pairs = [
+        row
+        for row in pair_rows
+        if row["sample"] in selected_samples and int(row["pair_rank"]) <= pair_rank_max
+    ]
+    selected_pairs.sort(key=lambda r: (r["sample"], int(r["pair_rank"])))
+    return selected_pairs
+
+
+RAW_SELECTED_PAIR_ROWS = resolve_raw_selected_pairs(RAW_MANIFEST_DIR, RAW_TOP_N, RAW_PAIR_RANK_MAX)
+RAW_PAIR_SAMPLES = [row["sample"] for row in RAW_SELECTED_PAIR_ROWS]
+RAW_PAIR_LABELS = [row["pair_label"] for row in RAW_SELECTED_PAIR_ROWS]
+
+
+def expand_raw_pairs(pattern):
+    return expand(pattern, zip, sample=RAW_PAIR_SAMPLES, pair_label=RAW_PAIR_LABELS)
+
+
+def expand_raw_pair_tools(pattern, tools):
+    samples = []
+    pair_labels = []
+    tool_vals = []
+    for row in RAW_SELECTED_PAIR_ROWS:
+        for tool in tools:
+            samples.append(row["sample"])
+            pair_labels.append(row["pair_label"])
+            tool_vals.append(tool)
+    return expand(pattern, zip, sample=samples, pair_label=pair_labels, tool=tool_vals)
+
+ALL_TARGETS = []
+if PIPELINE_MODE in {"sim", "both"}:
+    ALL_TARGETS.extend(
+        [
+            expand(os.path.join(PERFORMANCE_DIR, "{sample}_match_performance.tsv"), sample=sample_dirs),
+            expand(os.path.join(PERFORMANCE_DIR, "{sample}_pas_quantify_performance.tsv"), sample=sample_dirs),
+            expand(os.path.join(PERFORMANCE_DIR, "{sample}_de_apa_performance.tsv"), sample=sample_dirs),
+            expand(os.path.join(PERFORMANCE_DIR, "{sample}_quality_report.tsv"), sample=sample_dirs),
+            expand(os.path.join(PERFORMANCE_DIR, "{sample}_de_apa_performance.tsv"), sample=dapars2_source_sample_dirs),
+            expand(os.path.join(PERFORMANCE_DIR, "{sample}_de_apa_performance.tsv"), sample=scmapa_source_sample_dirs),
+            expand(os.path.join(PERFORMANCE_DIR, "{sample}_de_apa_dapars_parallel_performance.tsv"), sample=dapars_parallel_sample_dirs),
+            expand(os.path.join(DAPARS2_FORMAT_DIR, "{sample}_dapars2_format.txt"), sample=sample_dirs),
+            expand(os.path.join(DAPARS2_FORMAT_GROUND_TRUTH_DIR, "{sample}_dapars2_format.txt"), sample=ground_truth_samples),
+            expand(
+                os.path.join(DIFFERENTIAL_APA_DIR, "{sample}", f"{SCMAPA_GROUP1}_vs_{SCMAPA_GROUP2}", "APA_results.txt"),
+                sample=sample_dirs,
+            ),
+            expand(
+                os.path.join(DIFFERENTIAL_APA_DIR, "{sample}", f"{SCMAPA_DAPARS_GROUP1}_vs_{SCMAPA_DAPARS_GROUP2}", "APA_results.txt"),
+                sample=dapars_source_sample_dirs_sample12,
+            ),
+            expand(
+                os.path.join(DIFFERENTIAL_APA_DIR, "{sample}", f"{SCMAPA_DAPARS_T12_GROUP1}_vs_{SCMAPA_DAPARS_T12_GROUP2}_dapars_source", "APA_results.txt"),
+                sample=dapars_source_sample_dirs_t12,
+            ),
+            expand(
+                os.path.join(DIFFERENTIAL_APA_GROUND_TRUTH_DIR, "{sample}", f"{SCMAPA_GROUP1}_vs_{SCMAPA_GROUP2}", "APA_results.txt"),
+                sample=ground_truth_samples,
+            ),
+        ]
+    )
+
+if PIPELINE_MODE in {"raw", "both"}:
+    ALL_TARGETS.extend(RAW_SUMMARY_OUTPUTS)
+
+if PIPELINE_MODE in {"raw", "both", "raw_parallel"}:
+    ALL_TARGETS.extend(RAW_DAPARS2_PARALLEL_SUMMARY_OUTPUTS)
+
+
+rule all:
+    input:
+        ALL_TARGETS
+
+rule calculate_performance:
+    wildcard_constraints:
+        sample="(?!dapars2/|scmapa/).+"
+    input:
+        pd_pas=get_pd_pas,
+        pd_mtx=os.path.join(SIM_RESULT_DIR, "{sample}", "pas_counts.tsv"),
+        gt_pas=get_gt_bed,
+        gt_mtx=get_gt_mtx,
+    params:
+        tool=get_tool,
+        output_dir=PERFORMANCE_DIR,
+        sample_id=get_sample_id,
+        dexseq_split_num=DEXSEQ_SPLIT_NUM,
+        conda_exe=CONDA_EXE,
+        conda_env=DEXSEQ_ENV_NAME,
+        calculate_performance_script=os.path.join(SCRIPTS_DIR, "calculate_benchmark_performance.R"),
+    output:        
+        os.path.join(PERFORMANCE_DIR, "{sample}_match_performance.tsv"),
+        os.path.join(PERFORMANCE_DIR, "{sample}_pas_quantify_performance.tsv"),
+        os.path.join(PERFORMANCE_DIR, "{sample}_de_apa_performance.tsv"),
+        os.path.join(PERFORMANCE_DIR, "{sample}_quality_report.tsv"),
+        # os.path.join(DATA_DIR, "performance", "{sample}_match_pas.csv"),
+        # os.path.join(DATA_DIR, "performance", "{sample}_match_te.csv"),
+    shell:
+        """
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.calculate_performance_script}" \
+            --pd_pas {input.pd_pas} \
+            --pd_mtx {input.pd_mtx} \
+            --gt_pas {input.gt_pas} \
+            --gt_mtx {input.gt_mtx} \
+            --tool {params.tool} \
+            --sample {params.sample_id} \
+            --output_dir {params.output_dir} \
+            --dexseq_split_num {params.dexseq_split_num} \
+        """
+
+rule calculate_te_gap:
+    input:
+        pd_pas=get_pd_pas,
+        gt_pas=get_gt_bed,
+        gt_mtx=get_gt_mtx,
+        genome_size=get_genome_size,
+    params:
+        tool=get_tool,
+        output_dir=PERFORMANCE_DIR,
+        sample_id=get_sample_id,
+        calculate_te_gap_script=os.path.join(SCRIPTS_DIR, "calculate_te_gap.py"),
+    output:
+        os.path.join(PERFORMANCE_DIR, "{sample}_te_gap.tsv"),
+    shell:
+        """
+        python "{params.calculate_te_gap_script}" \
+            --pd_pas {input.pd_pas} \
+            --gt_pas {input.gt_pas} \
+            --gt_mtx {input.gt_mtx} \
+            --tool {params.tool} \
+            --sample {params.sample_id} \
+            --output_dir {params.output_dir} \
+            --genome_size {input.genome_size}
+        """
+
+
+rule calculate_dapars2_de_apa_performance:
+    wildcard_constraints:
+        sample="(dapars2|scmapa)/.+"
+    input:
+        pd_apa=os.path.join(
+            DIFFERENTIAL_APA_DIR,
+            "{sample}",
+            f"{SCMAPA_DAPARS_GROUP1}_vs_{SCMAPA_DAPARS_GROUP2}",
+            "APA_results.txt",
+        ),
+        gt_apa=get_gt_apa_for_dapars_source,
+    params:
+        tool=get_tool,
+        sample_id=get_sample_id,
+        conda_exe=CONDA_EXE,
+        conda_env=DEXSEQ_ENV_NAME,
+        match_type=f"{SCMAPA_DAPARS_GROUP1}_vs_{SCMAPA_DAPARS_GROUP2}",
+        filter_type_1=f"scmapa_adPval_{SCMAPA_AD_PVAL}",
+        filter_type_2=f"scmapa_or_{SCMAPA_OR_CUTOFF}",
+        script=os.path.join(SCRIPTS_DIR, "calculate_dapars2_de_apa_performance.R"),
+    output:
+        os.path.join(PERFORMANCE_DIR, "{sample}_de_apa_performance.tsv"),
+    shell:
+        """
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.script}" \
+            --pd_apa {input.pd_apa} \
+            --gt_apa {input.gt_apa} \
+            --tool {params.tool} \
+            --sample {params.sample_id} \
+            --match_type {params.match_type} \
+            --filter_type_1 {params.filter_type_1} \
+            --filter_type_2 {params.filter_type_2} \
+            --output {output}
+        """
+
+
+ruleorder: calculate_dapars2_de_apa_performance > calculate_performance
+
+rule convert_to_dapars2_format:
+    input:
+        pd_pas=get_pd_pas,
+        pd_mtx=os.path.join(SIM_RESULT_DIR, "{sample}", "pas_counts.tsv"),
+        gt_pas=get_gt_bed,
+        gt_mtx=get_gt_mtx,
+    params:
+        output_dir=DAPARS2_FORMAT_DIR,
+        sample_id=get_sample_id,
+        conda_exe=CONDA_EXE,
+        conda_env=SCMAPA_ENV_NAME,
+        integrated_converter_script=os.path.join(SCMAPA_DIR, "integrated_pas_to_dapars2_converter.R"),
+    output:
+        os.path.join(DAPARS2_FORMAT_DIR, "{sample}_dapars2_format.txt"),
+    shell:
+        """
+        # Create output directory if it doesn't exist
+        mkdir -p {params.output_dir}
+        mkdir -p "$(dirname {output})"
+
+        # Use the integrated converter script to convert to DaPars2 format
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.integrated_converter_script}" \
+            --pas_counts {input.pd_mtx} \
+            --pas_coords {input.pd_pas} \
+            --pas_annotation {input.gt_pas} \
+            --celltype_info {input.gt_mtx} \
+            -o {output} \
+            --min_exp 0 \
+            --min_cells 0
+        """
+
+rule convert_ground_truth_to_dapars2_format:
+    input:
+        gt_mtx=get_gt_mtx_for_ground_truth,
+    params:
+        output_dir=DAPARS2_FORMAT_GROUND_TRUTH_DIR,
+        sample_id=get_sample_id,
+        conda_exe=CONDA_EXE,
+        conda_env=SCMAPA_ENV_NAME,
+        multi_group_converter_script=os.path.join(SCMAPA_DIR, "multi_group_PAS_to_DaPars2_converter.R"),
+    output:
+        os.path.join(DAPARS2_FORMAT_GROUND_TRUTH_DIR, "{sample}_dapars2_format.txt"),
+    shell:
+        """
+        # Create output directory if it doesn't exist
+        mkdir -p {params.output_dir}
+
+        # Use the multi_group converter script for ground truth
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.multi_group_converter_script}" \
+            -i {input.gt_mtx} \
+            -o {output} \
+            --min_exp 0 \
+            --min_cells 0
+        """
+
+rule run_differential_apa_analysis:
+    input:
+        dapars2_file=os.path.join(DAPARS2_FORMAT_DIR, "{sample}_dapars2_format.txt"),
+    params:
+        output_dir=os.path.join(DIFFERENTIAL_APA_DIR, "{sample}"),
+        conda_exe=CONDA_EXE,
+        conda_env=SCMAPA_ENV_NAME,
+        comparison_mode=SCMAPA_COMPARISON_MODE,
+        group1=SCMAPA_GROUP1,
+        group2=SCMAPA_GROUP2,
+        na_cutoff=SCMAPA_NA_CUTOFF,
+        cpm_cutoff_long=SCMAPA_CPM_CUTOFF_LONG,
+        cpm_cutoff_short=SCMAPA_CPM_CUTOFF_SHORT,
+        coverage_cutoff=SCMAPA_COVERAGE_CUTOFF,
+        or_cutoff=SCMAPA_OR_CUTOFF,
+        adPval=SCMAPA_AD_PVAL,
+        differential_apa_script=os.path.join(SCMAPA_DIR, "parameterized_scmapa_analysis.R"),
+    output:
+        os.path.join(DIFFERENTIAL_APA_DIR, "{sample}", f"{SCMAPA_GROUP1}_vs_{SCMAPA_GROUP2}", "APA_results.txt"),
+    shell:
+        """
+        # Create output directory if it doesn't exist
+        mkdir -p {params.output_dir}
+
+        # Run differential APA analysis using scMAPA
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.differential_apa_script}" \
+            -i {input.dapars2_file} \
+            -o {params.output_dir} \
+            --comparison_mode {params.comparison_mode} \
+            --group1 {params.group1} \
+            --group2 {params.group2} \
+            --NAcutoff {params.na_cutoff} \
+            --CPMcutoff_L {params.cpm_cutoff_long} \
+            --CPMcutoff_S {params.cpm_cutoff_short} \
+            --coverageCutoff {params.coverage_cutoff} \
+            --ORcutoff {params.or_cutoff} \
+            --adPval {params.adPval} \
+        """
+
+rule run_differential_apa_analysis_dapars_sources:
+    input:
+        dapars2_file=os.path.join(SIM_RESULT_DIR, "{sample}", "DaPars2_Result_all_chrs.txt"),
+    params:
+        output_dir=os.path.join(DIFFERENTIAL_APA_DIR, "{sample}"),
+        conda_exe=CONDA_EXE,
+        conda_env=SCMAPA_ENV_NAME,
+        comparison_mode=SCMAPA_COMPARISON_MODE,
+        group1=SCMAPA_DAPARS_GROUP1,
+        group2=SCMAPA_DAPARS_GROUP2,
+        na_cutoff=SCMAPA_NA_CUTOFF,
+        cpm_cutoff_long=SCMAPA_CPM_CUTOFF_LONG,
+        cpm_cutoff_short=SCMAPA_CPM_CUTOFF_SHORT,
+        coverage_cutoff=SCMAPA_COVERAGE_CUTOFF,
+        or_cutoff=SCMAPA_OR_CUTOFF,
+        adPval=SCMAPA_AD_PVAL,
+        differential_apa_script=os.path.join(SCMAPA_DIR, "parameterized_scmapa_analysis.R"),
+    output:
+        os.path.join(DIFFERENTIAL_APA_DIR, "{sample}", f"{SCMAPA_DAPARS_GROUP1}_vs_{SCMAPA_DAPARS_GROUP2}", "APA_results.txt"),
+    shell:
+        """
+        mkdir -p {params.output_dir}
+
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.differential_apa_script}" \
+            -i {input.dapars2_file} \
+            -o {params.output_dir} \
+            --comparison_mode {params.comparison_mode} \
+            --group1 {params.group1} \
+            --group2 {params.group2} \
+            --NAcutoff {params.na_cutoff} \
+            --CPMcutoff_L {params.cpm_cutoff_long} \
+            --CPMcutoff_S {params.cpm_cutoff_short} \
+            --coverageCutoff {params.coverage_cutoff} \
+            --ORcutoff {params.or_cutoff} \
+            --adPval {params.adPval} \
+        """
+
+rule run_differential_apa_analysis_dapars_sources_t12:
+    input:
+        dapars2_file=os.path.join(SIM_RESULT_DIR, "{sample}", "DaPars2_Result_all_chrs.txt"),
+    params:
+        output_dir=os.path.join(DIFFERENTIAL_APA_DIR, "{sample}"),
+        conda_exe=CONDA_EXE,
+        conda_env=SCMAPA_ENV_NAME,
+        comparison_mode=SCMAPA_COMPARISON_MODE,
+        group1=SCMAPA_DAPARS_T12_GROUP1,
+        group2=SCMAPA_DAPARS_T12_GROUP2,
+        na_cutoff=SCMAPA_NA_CUTOFF,
+        cpm_cutoff_long=SCMAPA_CPM_CUTOFF_LONG,
+        cpm_cutoff_short=SCMAPA_CPM_CUTOFF_SHORT,
+        coverage_cutoff=SCMAPA_COVERAGE_CUTOFF,
+        or_cutoff=SCMAPA_OR_CUTOFF,
+        adPval=SCMAPA_AD_PVAL,
+        differential_apa_script=os.path.join(SCMAPA_DIR, "parameterized_scmapa_analysis.R"),
+    output:
+        os.path.join(DIFFERENTIAL_APA_DIR, "{sample}", f"{SCMAPA_DAPARS_T12_GROUP1}_vs_{SCMAPA_DAPARS_T12_GROUP2}_dapars_source", "APA_results.txt"),
+    shell:
+        """
+        mkdir -p {params.output_dir}
+
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.differential_apa_script}" \
+            -i {input.dapars2_file} \
+            -o {params.output_dir} \
+            --comparison_mode {params.comparison_mode} \
+            --group1 {params.group1} \
+            --group2 {params.group2} \
+            --NAcutoff {params.na_cutoff} \
+            --CPMcutoff_L {params.cpm_cutoff_long} \
+            --CPMcutoff_S {params.cpm_cutoff_short} \
+            --coverageCutoff {params.coverage_cutoff} \
+            --ORcutoff {params.or_cutoff} \
+            --adPval {params.adPval} \
+        """
+
+rule run_differential_apa_analysis_ground_truth:
+    input:
+        dapars2_file=os.path.join(DAPARS2_FORMAT_GROUND_TRUTH_DIR, "{sample}_dapars2_format.txt"),
+    params:
+        output_dir=os.path.join(DIFFERENTIAL_APA_GROUND_TRUTH_DIR, "{sample}"),
+        conda_exe=CONDA_EXE,
+        conda_env=SCMAPA_ENV_NAME,
+        comparison_mode=SCMAPA_COMPARISON_MODE,
+        group1=SCMAPA_GROUP1,
+        group2=SCMAPA_GROUP2,
+        na_cutoff=SCMAPA_NA_CUTOFF,
+        cpm_cutoff_long=SCMAPA_CPM_CUTOFF_LONG,
+        cpm_cutoff_short=SCMAPA_CPM_CUTOFF_SHORT,
+        coverage_cutoff=SCMAPA_COVERAGE_CUTOFF,
+        or_cutoff=SCMAPA_OR_CUTOFF,
+        adPval=SCMAPA_AD_PVAL,
+        differential_apa_script=os.path.join(SCMAPA_DIR, "parameterized_scmapa_analysis.R"),
+    output:
+        os.path.join(DIFFERENTIAL_APA_GROUND_TRUTH_DIR, "{sample}", f"{SCMAPA_GROUP1}_vs_{SCMAPA_GROUP2}", "APA_results.txt"),
+    shell:
+        """
+        # Create output directory if it doesn't exist
+        mkdir -p {params.output_dir}
+
+        # Run differential APA analysis using scMAPA for ground truth
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.differential_apa_script}" \
+            -i {input.dapars2_file} \
+            -o {params.output_dir} \
+            --comparison_mode {params.comparison_mode} \
+            --group1 {params.group1} \
+            --group2 {params.group2} \
+            --NAcutoff {params.na_cutoff} \
+            --CPMcutoff_L {params.cpm_cutoff_long} \
+            --CPMcutoff_S {params.cpm_cutoff_short} \
+            --coverageCutoff {params.coverage_cutoff} \
+            --ORcutoff {params.or_cutoff} \
+            --adPval {params.adPval} \
+        """
+
+rule calculate_dapars_t12_de_apa_performance:
+    wildcard_constraints:
+        sample="(?!dapars2/|scmapa/).+"
+    input:
+        pd_apa=os.path.join(
+            DIFFERENTIAL_APA_DIR,
+            "{sample}",
+            f"{SCMAPA_GROUP1}_vs_{SCMAPA_GROUP2}",
+            "APA_results.txt",
+        ),
+        gt_apa=get_gt_apa_for_dapars_source,
+    params:
+        tool=get_tool,
+        sample_id=get_sample_id,
+        conda_exe=CONDA_EXE,
+        conda_env=DEXSEQ_ENV_NAME,
+        match_type=f"{SCMAPA_DAPARS_T12_GROUP1}_vs_{SCMAPA_DAPARS_T12_GROUP2}",
+        filter_type_1=f"scmapa_adPval_{SCMAPA_AD_PVAL}",
+        filter_type_2=f"scmapa_or_{SCMAPA_OR_CUTOFF}",
+        script=os.path.join(SCRIPTS_DIR, "calculate_dapars2_de_apa_performance.R"),
+    output:
+        os.path.join(PERFORMANCE_DIR, "{sample}_de_apa_dapars_parallel_performance.tsv"),
+    shell:
+        """
+        "{params.conda_exe}" run -n "{params.conda_env}" \
+          Rscript "{params.script}" \
+            --pd_apa {input.pd_apa} \
+            --gt_apa {input.gt_apa} \
+            --tool {params.tool} \
+            --sample {params.sample_id} \
+            --match_type {params.match_type} \
+            --filter_type_1 {params.filter_type_1} \
+            --filter_type_2 {params.filter_type_2} \
+            --output {output}
+        """
+
+
+rule run_raw_dapars2_parallel_prepare_inputs:
+    input:
+        sample_top3=os.path.join(RAW_MANIFEST_DIR, "sample_top3_celltypes.tsv"),
+        pair_manifest=os.path.join(RAW_MANIFEST_DIR, "sample_pair_manifest.tsv"),
+        benchmark_script=RAW_BENCHMARK_SCRIPT,
+    params:
+        project_root=APABENCHMARK_PROJECT_ROOT,
+        top_n=RAW_TOP_N,
+        split_num=RAW_SPLIT_NUM,
+        pair_rank_max=RAW_PAIR_RANK_MAX,
+        conda_exe=CONDA_EXE,
+        dexseq_env=DEXSEQ_ENV_NAME,
+        scmapa_env=SCMAPA_ENV_NAME,
+        dapars_script_root=WORKFLOW_DIR,
+        output_root=RAW_RUN_ROOT,
+    output:
+        prep_done=RAW_DAPARS2_PARALLEL_PREP_DONE,
+        sample_top3=os.path.join(RAW_RUN_ROOT, "raw_pair_manifest", "sample_top3_celltypes.tsv"),
+        pair_manifest=os.path.join(RAW_RUN_ROOT, "raw_pair_manifest", "sample_pair_manifest.tsv"),
+        prep_meta=os.path.join(RAW_RUN_ROOT, "raw_pair_manifest", "prepare_metadata.tsv"),
+        qc=os.path.join(RAW_RUN_ROOT, "raw_qc", "pas_filter_overview.tsv"),
+    shell:
+        """
+        mkdir -p "{params.output_root}"
+        python3 "{input.benchmark_script}" \
+            --project-root "{params.project_root}" \
+            --top-n {params.top_n} \
+            --split-num {params.split_num} \
+            --pair-rank-max {params.pair_rank_max} \
+            --conda-exe "{params.conda_exe}" \
+            --dexseq-env "{params.dexseq_env}" \
+            --scmapa-env "{params.scmapa_env}" \
+            --dapars-script-root "{params.dapars_script_root}" \
+            --output-root "{params.output_root}" \
+            --prepare-only
+        echo ok > "{output.prep_done}"
+        """
+
+
+def _raw_parallel_upstream_inputs(wildcards):
+    return [RAW_DAPARS2_PARALLEL_PREP_DONE]
+
+
+rule run_raw_performance_pair:
+    wildcard_constraints:
+        sample=".+",
+        pair_label=".+",
+        tool=".+",
+    input:
+        prep_done=RAW_DAPARS2_PARALLEL_PREP_DONE,
+    params:
+        run_root=RAW_RUN_ROOT,
+        script_root=WORKFLOW_DIR,
+        conda_exe=CONDA_EXE,
+        dexseq_env=DEXSEQ_ENV_NAME,
+        split_num=RAW_SPLIT_NUM,
+        script=os.path.join(SCRIPTS_DIR, "raw_performance_eval_one.py"),
+    output:
+        match=os.path.join(RAW_RUN_ROOT, "raw_performance", "by_sample_pair_tool", "{tool}", "{sample}__{pair_label}_match_performance.tsv"),
+        quantify=os.path.join(RAW_RUN_ROOT, "raw_performance", "by_sample_pair_tool", "{tool}", "{sample}__{pair_label}_pas_quantify_performance.tsv"),
+        deapa=os.path.join(RAW_RUN_ROOT, "raw_performance", "by_sample_pair_tool", "{tool}", "{sample}__{pair_label}_de_apa_performance.tsv"),
+        state=os.path.join(RAW_RUN_ROOT, "raw_performance", "state", "eval", "{tool}", "{sample}", "{pair_label}.done"),
+        failure=os.path.join(RAW_RUN_ROOT, "raw_performance", "failures", "eval", "{tool}", "{sample}", "{pair_label}", "failure.tsv"),
+    shell:
+        """
+        python3 "{params.script}" \
+            --run-root "{params.run_root}" \
+            --script-root "{params.script_root}" \
+            --conda-exe "{params.conda_exe}" \
+            --dexseq-env "{params.dexseq_env}" \
+            --split-num {params.split_num} \
+            --sample "{wildcards.sample}" \
+            --pair-label "{wildcards.pair_label}" \
+            --tool "{wildcards.tool}" \
+            --state-file "{output.state}" \
+            --failure-file "{output.failure}"
+        """
+
+
+rule run_raw_performance_aggregate:
+    input:
+        pair_done=expand_raw_pair_tools(
+            os.path.join(RAW_RUN_ROOT, "raw_performance", "state", "eval", "{tool}", "{sample}", "{pair_label}.done"),
+            RAW_STANDARD_TOOLS,
+        ),
+    params:
+        run_root=RAW_RUN_ROOT,
+        script=os.path.join(SCRIPTS_DIR, "raw_performance_aggregate.py"),
+    output:
+        match=os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_match_metrics.tsv"),
+        quantify=os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_pas_quantify_metrics.tsv"),
+        deapa=os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_de_apa_metrics.tsv"),
+        missing_failed=os.path.join(RAW_RUN_ROOT, "raw_performance", "summary", "raw_performance_missing_failed.tsv"),
+        done=os.path.join(RAW_RUN_ROOT, "raw_performance", "state", "summary.done"),
+    shell:
+        """
+        python3 "{params.script}" \
+            --run-root "{params.run_root}" \
+            --done-file "{output.done}"
+        """
+
+
+rule run_raw_dapars2_parallel_gt_pair:
+    wildcard_constraints:
+        sample=".+",
+        pair_label=".+",
+    input:
+        _raw_parallel_upstream_inputs,
+    params:
+        run_root=RAW_RUN_ROOT,
+        script_root=WORKFLOW_DIR,
+        conda_exe=CONDA_EXE,
+        scmapa_env=SCMAPA_ENV_NAME,
+        script=os.path.join(SCRIPTS_DIR, "raw_parallel_prepare_gt_one.py"),
+    output:
+        state=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "prepare_gt", "{sample}", "{pair_label}.done"),
+        failure=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "failures", "prepare_gt", "{sample}", "{pair_label}", "failure.tsv"),
+    shell:
+        """
+        python3 "{params.script}" \
+            --run-root "{params.run_root}" \
+            --script-root "{params.script_root}" \
+            --conda-exe "{params.conda_exe}" \
+            --scmapa-env "{params.scmapa_env}" \
+            --sample "{wildcards.sample}" \
+            --pair-label "{wildcards.pair_label}" \
+            --state-file "{output.state}" \
+            --failure-file "{output.failure}"
+        """
+
+
+rule run_raw_dapars2_parallel_nondapars_pair:
+    wildcard_constraints:
+        sample=".+",
+        pair_label=".+",
+        tool=".+",
+    input:
+        gt_done=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "prepare_gt", "{sample}", "{pair_label}.done"),
+    params:
+        run_root=RAW_RUN_ROOT,
+        script_root=WORKFLOW_DIR,
+        conda_exe=CONDA_EXE,
+        scmapa_env=SCMAPA_ENV_NAME,
+        script=os.path.join(SCRIPTS_DIR, "raw_parallel_prepare_nondapars_one.py"),
+    output:
+        state=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "prepare_nondapars", "{tool}", "{sample}", "{pair_label}.done"),
+        failure=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "failures", "prepare_nondapars", "{tool}", "{sample}", "{pair_label}", "failure.tsv"),
+    shell:
+        """
+        python3 "{params.script}" \
+            --run-root "{params.run_root}" \
+            --script-root "{params.script_root}" \
+            --conda-exe "{params.conda_exe}" \
+            --scmapa-env "{params.scmapa_env}" \
+            --sample "{wildcards.sample}" \
+            --pair-label "{wildcards.pair_label}" \
+            --tool "{wildcards.tool}" \
+            --state-file "{output.state}" \
+            --failure-file "{output.failure}"
+        """
+
+
+rule run_raw_dapars2_parallel_dapars_pair:
+    wildcard_constraints:
+        sample=".+",
+        pair_label=".+",
+        tool=".+",
+    input:
+        gt_done=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "prepare_gt", "{sample}", "{pair_label}.done"),
+    params:
+        project_root=APABENCHMARK_PROJECT_ROOT,
+        run_root=RAW_RUN_ROOT,
+        script=os.path.join(SCRIPTS_DIR, "raw_parallel_prepare_dapars_one.py"),
+    output:
+        state=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "prepare_dapars", "{tool}", "{sample}", "{pair_label}.done"),
+        failure=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "failures", "prepare_dapars", "{tool}", "{sample}", "{pair_label}", "failure.tsv"),
+    shell:
+        """
+        python3 "{params.script}" \
+            --project-root "{params.project_root}" \
+            --run-root "{params.run_root}" \
+            --sample "{wildcards.sample}" \
+            --pair-label "{wildcards.pair_label}" \
+            --tool "{wildcards.tool}" \
+            --state-file "{output.state}" \
+            --failure-file "{output.failure}"
+        """
+
+
+def get_raw_parallel_tool_ready_input(wildcards):
+    if wildcards.tool in RAW_DAPARS_TOOLS:
+        return os.path.join(
+            RAW_RUN_ROOT,
+            "raw_dapars2_parallel",
+            "state",
+            "prepare_dapars",
+            wildcards.tool,
+            wildcards.sample,
+            f"{wildcards.pair_label}.done",
+        )
+    return os.path.join(
+        RAW_RUN_ROOT,
+        "raw_dapars2_parallel",
+        "state",
+        "prepare_nondapars",
+        wildcards.tool,
+        wildcards.sample,
+        f"{wildcards.pair_label}.done",
+    )
+
+
+rule run_raw_dapars2_parallel_eval_pair_tool:
+    wildcard_constraints:
+        sample=".+",
+        pair_label=".+",
+        tool=".+",
+    input:
+        gt_done=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "prepare_gt", "{sample}", "{pair_label}.done"),
+        tool_done=get_raw_parallel_tool_ready_input,
+    params:
+        run_root=RAW_RUN_ROOT,
+        script_root=WORKFLOW_DIR,
+        conda_exe=CONDA_EXE,
+        dexseq_env=DEXSEQ_ENV_NAME,
+        scmapa_env=SCMAPA_ENV_NAME,
+        script=os.path.join(SCRIPTS_DIR, "raw_parallel_eval_one.py"),
+    output:
+        perf=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "performance", "{tool}", "{sample}", "{pair_label}", "dapars2_performance.tsv"),
+        failure=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "failures", "eval", "{tool}", "{sample}", "{pair_label}", "failure.tsv"),
+        state=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "eval", "{tool}", "{sample}", "{pair_label}.done"),
+    shell:
+        """
+        python3 "{params.script}" \
+            --run-root "{params.run_root}" \
+            --script-root "{params.script_root}" \
+            --conda-exe "{params.conda_exe}" \
+            --dexseq-env "{params.dexseq_env}" \
+            --scmapa-env "{params.scmapa_env}" \
+            --sample "{wildcards.sample}" \
+            --pair-label "{wildcards.pair_label}" \
+            --tool "{wildcards.tool}" \
+            --perf-out "{output.perf}" \
+            --failure-file "{output.failure}" \
+            --state-file "{output.state}"
+        """
+
+
+rule run_raw_dapars2_parallel_aggregate:
+    input:
+        eval_done=expand_raw_pair_tools(
+            os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "eval", "{tool}", "{sample}", "{pair_label}.done"),
+            RAW_PARALLEL_TOOLS,
+        ),
+    params:
+        run_root=RAW_RUN_ROOT,
+        script=os.path.join(SCRIPTS_DIR, "raw_parallel_aggregate.py"),
+    output:
+        metrics=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_metrics.tsv"),
+        missing_failed=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_missing_failed.tsv"),
+        gt_failures=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_gt_failures.tsv"),
+        nondapars_failures=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_nondapars_failures.tsv"),
+        dapars_failures=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_dapars_failures.tsv"),
+        done=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "state", "eval.done"),
+    shell:
+        """
+        python3 "{params.script}" \
+            --run-root "{params.run_root}" \
+            --done-file "{output.done}"
+        """
+
+
+rule run_raw_dapars2_summary_alias:
+    input:
+        metrics=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_metrics.tsv"),
+        missing=os.path.join(RAW_RUN_ROOT, "raw_dapars2_parallel", "summary", "raw_dapars2_parallel_missing_failed.tsv"),
+    output:
+        metrics=os.path.join(RAW_RUN_ROOT, "raw_dapars2_format", "summary", "raw_dapars2_metrics.tsv"),
+        missing=os.path.join(RAW_RUN_ROOT, "raw_dapars2_format", "summary", "raw_dapars2_missing_failed.tsv"),
+    shell:
+        """
+        mkdir -p "$(dirname "{output.metrics}")"
+        cp "{input.metrics}" "{output.metrics}"
+        cp "{input.missing}" "{output.missing}"
+        """
